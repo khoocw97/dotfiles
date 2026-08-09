@@ -1,0 +1,76 @@
+prefer-no-csd
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+hotkey-overlay {
+    skip-at-startup
+    hide-not-bound
+}
+
+environment {
+    XDG_CURRENT_DESKTOP "niri"
+    XDG_SESSION_TYPE "wayland"
+    GTK_IM_MODULE ""
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORM "wayland;xcb"
+    QT_QPA_PLATFORMTHEME "gtk3"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+}
+
+input {
+    keyboard {
+        xkb
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+        // disabled-on-external-mouse
+    }
+    mouse {
+        // natural-scroll
+        // accel-speed 0.2
+    }
+    focus-follows-mouse max-scroll-amount="0%"
+    // Disable niri take over power button
+    disable-power-key-handling
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+recent-windows {
+    binds {
+        // Pre-select the "Output" scope when switching windows.
+        Alt+Tab         { next-window scope="output"; }
+        Alt+Shift+Tab   { previous-window scope="output"; }
+        // filter with app-id (pre-seletct next app with same id)
+        Alt+grave       { next-window filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+    }
+    highlight {
+        corner-radius 12
+        active-color "#b6c7e7"
+        urgent-color "#ffb4ab"
+    }
+}
+
+debug {
+  // Allows notification actions and window activation from Noctalia.
+  honor-xdg-activation-with-invalid-serial
+}
+
+// settings files
+include "startup.kdl"
+include "colour.kdl"
+include "layout.kdl"
+include "animations.kdl"
+//include "outputs.kdl"
+//include "displays.kdl"
+include "cursor.kdl"
+include "windowrules.kdl"
+include "binds.kdl"
+include "noctalia.kdl"

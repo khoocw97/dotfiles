@@ -1,0 +1,37 @@
+// 全局
+window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+    tiled-state true
+    draw-border-with-background false
+}
+//
+layout {
+    gaps 12
+    background-color "transparent"
+    center-focused-column "never"
+    // first windows center
+    always-center-single-column
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        proportion 0.66667
+    }
+    default-column-width { proportion 0.5; }
+
+    focus-ring {
+        width 5
+    }
+
+    border {
+        off
+        width 5
+    }
+
+    shadow {
+        on
+        softness 10
+        spread 4
+        offset x=0 y=0
+    }
+}

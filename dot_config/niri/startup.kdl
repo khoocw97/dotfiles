@@ -1,0 +1,14 @@
+// Startup
+spawn-at-startup "noctalia"
+spawn-at-startup "fcitx5" "-d"
+
+
+// Personal Startup
+spawn-at-startup "sunshine"
+// spawn-sh-at-startup "/home/weng/.local/bin/fix_audio.sh"
+// spawn-at-startup "/home/weng/AppImages/beeper.appimage"
+
+// Personal Workspaces
+// workspace "main"
+// workspace "obs"
+// workspace "chat"
