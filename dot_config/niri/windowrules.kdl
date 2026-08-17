@@ -75,7 +75,7 @@ window-rule {
 }
 
 window-rule {
-    match add-id="^steam$"
+    match app-id="^steam$"
     match title="Steam"
     open-on-workspace "steam"
 }

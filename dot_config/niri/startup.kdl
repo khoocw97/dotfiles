@@ -2,6 +2,7 @@
 spawn-at-startup "noctalia"
 spawn-at-startup "fcitx5" "-d"
 spawn-sh-at-startup "[ -f ~/.config/user-dirs.dirs ] || xdg-user-dirs-update" // 首次登录创建 XDG 目录,之后跳过
+spawn-sh-at-startup "~/.local/bin/sbz-speaker.sh"
 
 // Personal Startup
 spawn-at-startup "sunshine"
