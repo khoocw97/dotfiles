@@ -1,13 +1,9 @@
-output "eDP-1" {
-    mode "1920x1080@59.934"
-    scale 1
+output "DP-2" {
+    mode "2560x1440@180.002"
+    scale 1.5
     position x=0 y=0
+    // change the grey screen before shell
+    backdrop-color "#2A0A0E"
     focus-at-startup
-}
-
-output "HDMI-A-1" {
-    mode "1920x1080@60.000"
-    scale 1
-    position x=1920 y=0
 }
 
