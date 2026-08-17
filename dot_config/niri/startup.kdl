@@ -9,6 +9,5 @@ spawn-at-startup "sunshine"
 // spawn-at-startup "~/AppImages/beeper.appimage"
 
 // Personal Workspaces
-// workspace "main"
-// workspace "obs"
-// workspace "chat"
+workspace "main"
+workspace "steam"
