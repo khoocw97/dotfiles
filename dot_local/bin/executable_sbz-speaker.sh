@@ -12,6 +12,6 @@ amixer -c "$CARD" sset 'Enable OutFX' unmute
 amixer -c "$CARD" sset 'HP/Speaker Auto Detect' off
 amixer -c "$CARD" sset 'Full-Range Front Speakers' unmute
 amixer -c "$CARD" sset 'Output Select' Speakers
-amixer -c "$CARD" sset 'FX: X-Bass' on
-amixer -c "$CARD" sset 'FX: X-Bass Crossover' 35
+amixer -c "$CARD" sset 'FX: X-Bass' 20
+amixer -c "$CARD" sset 'FX: X-Bass Crossover' 30
 
