@@ -9,11 +9,11 @@ binds {
     Mod+O hotkey-overlay-title="OBS-Studio" { spawn "flatpak" "run" "com.obsproject.Studio"; }
     Mod+P hotkey-overlay-title="Print Script" { spawn "kitty" "--class" "PrintTerminal" "--" "～/.local/bin/print_pdf.sh"; }
     Mod+F1 hotkey-overlay-title="Toggle Headphone/Speaker" { spawn-sh "~/.local/bin/sbz-toggle-headphone.sh"; }
-
+    Mod+Space hotkey-overlay-title="Application Launcher:fuzzel" { spawn "fuzzel"; }
     // --------------------------------------------------------------
 
     // Noctalia Setting
-    Mod+Space hotkey-overlay-title="Application Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
+    // Mod+Space hotkey-overlay-title="Application Launcher" { spawn "noctalia" "msg" "panel-toggle" "launcher"; }
     Mod+X hotkey-overlay-title="Power Menu"  { spawn "noctalia" "msg" "panel-toggle" "session"; }
     Mod+S hotkey-overlay-title="Setting" { spawn "noctalia" "msg" "settings-toggle"; }
     Mod+V hotkey-overlay-title="Clipboard Manager" { spawn "noctalia" "msg" "panel-toggle" "clipboard"; }
