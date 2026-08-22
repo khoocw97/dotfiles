@@ -18,10 +18,10 @@ if [[ $(pactl get-default-sink) == *analog* ]]; then
     amixer -c "$CARD" sset 'Full-Range Rear Speakers' off
     amixer -c "$CARD" sset 'Enable OutFX' off
     amixer -c "$CARD" sset 'FX: X-Bass' off
-    notify-send --app-name="音频模式" "已切至：光纤耳机 (纯净)" --icon=audio-headphones
+    notify-send --app-name="模式" "耳机-纯净" --icon=audio-headphones
 else
     # 光纤/其他 -> 音箱 (复用 startup 脚本)
     ~/.local/bin/sbz-speaker.sh
-    notify-send --app-name="音频模式" "已切至：Soundbar (35Hz 音效)" --icon=audio-speakers
+    notify-send --app-name="模式" "音箱-音效" --icon=audio-speakers
 fi
 
