@@ -114,3 +114,12 @@ window-rule {
     open-focused false
     open-maximized true
 }
+
+// OnlyOffice save
+window-rule {
+    match app-id="^DesktopEditors$"
+    match title="另存为"
+    default-column-width { fixed 1366; }
+    default-window-height { fixed 768; }
+}
+
