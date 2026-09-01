@@ -1,13 +1,13 @@
 // 全局
 window-rule {
-    geometry-corner-radius 12
-    clip-to-geometry true
+    geometry-corner-radius 0
+    clip-to-geometry false
     tiled-state true
     draw-border-with-background false
 }
 //
 layout {
-    gaps 12
+    gaps 10
     background-color "transparent"
     center-focused-column "never"
     // first windows center
