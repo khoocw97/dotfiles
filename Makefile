@@ -11,3 +11,4 @@ gruvbox-dark tokyonight: %:
 		{ echo "$(CONFIG) 主题行异常，先跑 make install"; exit 1; }
 	@sed -i 's/^theme = .*/theme = "$@"/' $(CONFIG)
 	chezmoi apply
+	-busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 ReloadAddonConfig s classicui >/dev/null 2>&1
