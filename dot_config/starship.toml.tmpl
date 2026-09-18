@@ -1,3 +1,5 @@
+palette = '{{ get . "theme" | default "tokyonight" }}'
+
 format = """
 $os\
 $directory\
@@ -12,25 +14,25 @@ $battery\
 
 [fill]
 symbol = " "
-style = "bg:#212736"
+style = "bg:surface"
 
 [directory]
-style = "fg:#e3e5e5 bg:#769ff0"
+style = "fg:dir_fg bg:blue"
 format = "[ $path ]($style)"
 truncation_length = 3
 truncation_symbol = "…/"
 
 [git_branch]
 symbol = ""
-style = "bg:#394260"
-format = '[[ $symbol $branch ](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:panel"
+format = '[[ $symbol $branch ](fg:blue bg:panel)]($style)'
 
 [git_status]
-style = "bg:#394260"
-format = '[[($all_status$ahead_behind )](fg:#769ff0 bg:#394260)]($style)'
+style = "bg:panel"
+format = '[[($all_status$ahead_behind )](fg:blue bg:panel)]($style)'
 
 [cmd_duration]
-style = "bg:#394260"
+style = "bg:panel"
 format = "[ $duration ]($style)"
 
 [battery]
@@ -41,11 +43,11 @@ discharging_symbol = "⇣"
 [time]
 disabled = false
 time_format = "%r"
-style = "bg:#1d2230"
+style = "bg:time_bg"
 format = "[   $time ]($style)"
 
 [os]
-style = "bg:#a3aed2 fg:#090c0c"
+style = "bg:os_bg fg:os_fg"
 format = "[ $symbol ]($style)"
 disabled = false
 
@@ -95,3 +97,25 @@ Ubuntu = " "
 Unknown = " "
 Void = " "
 Windows = "󰍲 "
+
+# ------------ theme ------------
+[palettes.tokyonight]
+surface = "#212736"
+fg = "#e3e5e5"
+dir_fg = "#e3e5e5"
+blue = "#769ff0"
+panel = "#394260"
+time_bg = "#1d2230"
+os_bg = "#a3aed2"
+os_fg = "#090c0c"
+
+# gruvbox-material-dark
+[palettes.gruvbox-dark]
+surface = "#282828"
+fg = "#ddc7a1"
+dir_fg = "#1d2021"
+blue = "#7daea3"
+panel = "#32302f"
+time_bg = "#141617"
+os_bg = "#d8a657"
+os_fg = "#1d2021"

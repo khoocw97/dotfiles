@@ -1,0 +1,9 @@
+{{- if ne .chezmoi.hostname "Niri-WM" }}
+.config/niri/**
+{{- end }}
+{{- if ne .chezmoi.hostname "Umbriel-WM" }}
+.config/umbriel/**
+{{- end }}
+
+Makefile
+README.md
