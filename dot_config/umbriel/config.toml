@@ -1,0 +1,142 @@
+[include]
+files = [
+  "outputs.toml",
+  "keybinds.toml",
+  "rules.toml",
+  "startup.toml",
+  "noctalia.toml",
+]
+
+[general]
+# autostart moved to startup.toml
+# mod_key = "Super"            # Mod in keybinds; defaults to Super (Alt when nested)
+xwayland = true                # requires restart to change
+show_cheatsheet = false         # show keybinds overlay on startup
+focus_on_activate = false      # activation requests mark urgent without stealing focus
+honor_restored_maximize = false # let apps restore their saved maximized state
+
+[environment]
+# GTK_THEME = "Adwaita:dark"
+QT_QPA_PLATFORMTHEME = "qt5ct"
+ELECTRON_OZONE_PLATFORM_HINT = "wayland"
+GDK_BACKEND = "wayland,x11"
+QT_QPA_PLATFORM = "wayland;xcb"
+
+[workspaces]
+back_and_forth = false
+
+# Appearance -----------------------------------------------------------------
+
+[appearance]
+prefer_no_csd = true
+border_width = 5               # 0-100
+outer_border_width = 0         # 0-100
+corner_radius = 0              # 0-100
+# animation_ms = 200             # 1-10000
+# border_focused = "#7AA3FFFF"
+# border_unfocused = "#292933FF"
+# scratchpad_border_focused = "#E5C07BFF"
+# scratchpad_border_unfocused = "#5C4A2AFF"
+# outer_border_color = "#1A1A1FFF"
+# insert_hint_color = "#7FC8FF80"
+# backdrop_color = "#000000FF"
+
+[appearance.blur]
+enabled = false
+optimized = true
+passes = 3                     # 0-8
+radius = 3                     # 0-100
+noise = 0.02                   # 0.0-1.0
+brightness = 0.9               # 0.0-2.0
+contrast = 0.9                 # 0.0-2.0
+saturation = 1.1               # 0.0-2.0
+
+[appearance.shadow]
+enabled = false
+softness = 2                   # 0-200, 0 = hard edge
+offset_x = 2                   # -200 to 200
+offset_y = 2
+
+# Overview -------------------------------------------------------------------
+
+[overview]
+zoom = 0.5                     # 0.1-0.75
+background_blur = true       # blur the wallpaper while the overview is open
+# background_tint = "#10101430"
+# workspace_background = "#00000044" # set alpha to FF for an opaque background
+# Layout ---------------------------------------------------------------------
+
+[layout]
+mode = "scrolling"             # "scrolling" or "dwindle"
+gap = 5 # 0-500
+width_presets = [0.333, 0.5, 0.667] # shared by scrolling and dwindle
+
+[layout.scrolling]
+# Vertical workspaces stack horizontal lanes from top to bottom.
+# direction = "horizontal"
+default_width_fraction = 0.5  # remove to let clients choose their initial width
+center_underfull_strip = true  # center the strip whenever it is narrower than the viewport
+
+# Workspace layout overrides (see docs/user/outputs.md#workspace-rules)
+# [[workspace]]
+# name = "chat"
+# layout.mode = "dwindle"
+# layout.gap = 4
+# layout.scrolling.center_underfull_strip = false
+
+# Input ----------------------------------------------------------------------
+
+[input]
+middle_click_paste = true      # primary-selection clipboard, applies on reload
+
+[input.keyboard]
+layout = ""                    # "us,de" loads both; switch with keyboard-layout-next
+variant = ""
+options = ""                   # XKB options, e.g. "grp:alt_shift_toggle"
+repeat_rate = 25               # 0-1000 Hz
+repeat_delay = 600             # 0-10000 ms
+numlock_toggle = true # true enables NumLock when a keyboard connects; false leaves it off
+
+[input.touchpad]
+tap = true                      # enabled by default; false disables tap-to-click
+# natural_scroll = true
+
+[input.mouse]
+# natural_scroll = false
+# accel_profile = "flat"       # omitted preserves the device's libinput default
+sensitivity = 0.0              # pointer speed, -1.0 to 1.0
+scroll_wheel_step = 60         # 1-1000
+# Override only the listed settings for an exact, case-sensitive device name.
+# Applies per device kind: layout, variant, options, repeat_rate, and
+# repeat_delay to keyboards; tap to touchpads; natural_scroll to touchpads
+# and mice; acceleration settings to mice. Find names with `libinput list-devices`.
+# [[input.device]]
+# name = "Acme Precision Touchpad"
+# tap = true
+# natural_scroll = false
+# [[input.device]]
+# name = "Gaming Mouse"
+# accel_profile = "flat"
+# sensitivity = 0.0
+
+[input.tablet]
+enabled = true                 # false disables the tablet and its pads
+# map_to_output = "DP-1"       # confine the tablet area to one monitor
+map_to_focused_output = true
+map_to_focused_window = true  # pen area = focused window; wins over the output mappings
+left_handed = true # flip 180°
+# calibration_matrix = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # libinput calibration, 6 numbers
+
+
+[input.cursor]
+theme = ""
+size = 24                      # 1-512
+hardware_cursor = true         # false forces software cursor composition
+hide_when_typing = false       # hide after a non-modifier key press
+hide_timeout_ms = 0            # 0-3600000, 0 disables hiding
+
+[input.focus]
+follows_mouse = true
+# Refuse hover focus when revealing the window would scroll further than this,
+# measured in viewport widths (1.0 = one full screen). Omit for no limit.
+follows_mouse_max_scroll = 0.5

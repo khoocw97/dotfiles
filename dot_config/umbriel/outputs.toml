@@ -1,0 +1,12 @@
+[output.eDP-1]
+mode = "1920x1080@59.934"
+position = [0, 0]
+scale = 1.00
+workspaces = ["1", "2", "3"]
+
+[output.HDMI-A-1]
+mode = "1920x1080@59.940"
+position = [1920, 0]
+scale = 1.00
+workspaces = ["1", "2", "3"]
+

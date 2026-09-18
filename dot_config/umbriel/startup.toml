@@ -1,0 +1,13 @@
+# Startup applications
+# Converted from niri config
+
+[general]
+autostart = [
+    "noctalia",
+    "fcitx5 -d",
+    "$HOME/.local/bin/fix_audio.sh",
+    "mega-cmd-server --do-not-log-to-stdout",
+    "sunshine",
+    "$HOME/AppImages/beeper.appimage",
+    "obs",
+]

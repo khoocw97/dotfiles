@@ -1,0 +1,89 @@
+# Window and layer rules (see docs/user/rules.md) ---------------------------
+
+# Blur all windows
+[[window_rule]]
+blur = false
+blur_optimized = true
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.Noctalia$"
+default_floating = true
+default_size = [1020, 900]
+
+[[window_rule]]
+match.app_id = "^dev.noctalia.UmbrielSharePicker$"
+default_floating = true
+default_size = [800, 600]
+
+# [[window_rule]]
+# match.title = "^notificationtoasts_.+_desktop"
+# default_position = { x = 0, y = 0, anchor = "bottom_right" }
+# default_focused = false
+# default_pinned = true
+
+# Window Rules
+# Converted from niri config
+
+# Beeper - chat workspace (3), maximized, no focus
+[[window_rule]]
+match.app_id = "^Beeper$"
+default_workspace = 3
+default_maximize = true
+default_focused = false
+
+[[window_rule]]
+match.app_id = "^(helium|chromium)$"
+default_width = 0.75
+
+[[window_rule]]
+match.app_id = "^com[.]obsproject[.]Studio$"
+default_workspace = 2
+default_focused = false
+default_maximize = true
+
+# Put this AFTER the generic OBS rule so the projector overrides it.
+[[window_rule]]
+match.app_id = "^com[.]obsproject[.]Studio$"
+match.title = "^投影"
+default_workspace = 1
+default_focused = true
+
+# PrintTerminal - floating, fixed size, top-right
+[[window_rule]]
+match.app_id = "PrintTerminal"
+default_floating = true
+default_size = [600, 400]
+default_position = { x = 15, y = 15, anchor = "bottom_right" }
+
+# GNOME settings apps - tiled, 0.5 width
+[[window_rule]]
+match.app_id = "^(gnome-control-center|pavucontrol|nm-connection-editor)$"
+default_width = 0.5
+default_floating = false
+
+# GNOME calculators and small utilities - floating
+[[window_rule]]
+match.app_id = "^(org\\.gnome\\.Calculator|gnome-calculator|galculator|blueman-manager|xdg-desktop-portal)$"
+default_floating = true
+
+# Steam notification toasts - bottom-right, no focus
+[[window_rule]]
+match.app_id = "^steam$"
+match.title = "^notificationtoasts_"
+default_position = { x = 10, y = 10, anchor = "bottom_right" }
+default_focused = false
+
+# Firefox PiP and Zoom - floating
+[[window_rule]]
+match.title = "^Picture-in-Picture$"
+default_floating = true
+
+[[window_rule]]
+match.app_id = "^zoom$"
+default_floating = true
+
+# Slight transparency for editors
+[[window_rule]]
+match.app_id = "^(code|org\\.gnome\\.Nautilus)$"
+opacity = 0.97
+
