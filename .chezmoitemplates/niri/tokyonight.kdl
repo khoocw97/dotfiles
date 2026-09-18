@@ -12,7 +12,6 @@ layout {
         urgent-color   "#f7768e"
     }
 
-
     tab-indicator {
         active-color   "#7aa2f7"
         inactive-color "#0940b5"
@@ -21,6 +20,11 @@ layout {
 
     insert-hint {
         color "#7aa2f780"
+    }
+
+    background-color "transparent"
+    shadow {
+        color "#00000070"
     }
 }
 

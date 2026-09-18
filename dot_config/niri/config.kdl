@@ -51,12 +51,8 @@ recent-windows {
         Alt+grave       { next-window filter="app-id"; }
         Alt+Shift+grave { previous-window filter="app-id"; }
     }
-    highlight {
-        corner-radius 12
-        active-color "#b6c7e7"
-        urgent-color "#ffb4ab"
-    }
 }
+
 
 debug {
   // Allows notification actions and window activation from Noctalia.
@@ -73,4 +69,3 @@ include "cursor.kdl"
 include "windowrules.kdl"
 include "binds.kdl"
 
-include "noctalia.kdl"

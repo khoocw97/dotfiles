@@ -584,8 +584,8 @@ source = "builtin"
 wallpaper_scheme = "m3-content"
 
     [theme.templates]
-    builtin_ids = [ "gtk3", "gtk4", "kitty", "niri", "qt" ]
-    community_ids = [ "opencode", "ungoogled-chromium", "steam", "fuzzel", "fastfetch", "obs", "bat", "yazi" ]
+    builtin_ids = [ "gtk3", "gtk4", "qt" ]
+    community_ids = []
     enable_builtin_templates = true
     enable_community_templates = true
 
