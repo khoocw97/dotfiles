@@ -53,7 +53,7 @@
 "Mod+F" = "window-toggle-maximize"
 # "Mod+Shift+F" = "window-toggle-maximize-to-edges" # 展开至边界
 "Mod+Shift+F" = "window-toggle-fullscreen" # 全屏
-"Mod+R" = "window-cycle-width"
+"Mod+R" = "window-cycle-primary-extent"
 "Mod+T" = "window-toggle-floating"
 "Mod+Shift+T" = "window-toggle-pinned"
 

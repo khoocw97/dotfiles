@@ -19,7 +19,7 @@ blur_popups = false
 [[window_rule]]
 match.app_id = "^dev.noctalia.UmbrielSharePicker$"
 default_floating = true
-default_size = [800, 600]
+default_floating_size_px = { width = 800, height = 600 }
 
 # Float utility windows
 [[window_rule]]
@@ -71,13 +71,13 @@ default_focused = true
 [[window_rule]]
 match.app_id = "PrintTerminal"
 default_floating = true
-default_size = [600, 400]
+default_floating_size_px = { width = 600, height = 400 }
 default_position = { x = 15, y = 15, anchor = "bottom_right" }
 
 # GNOME settings apps - tiled, 0.5 width
 [[window_rule]]
 match.app_id = "^(gnome-control-center|pavucontrol|nm-connection-editor)$"
-default_width = 0.5
+default_scrolling_extent = 0.5
 default_floating = false
 
 # GNOME calculators and small utilities - floating
