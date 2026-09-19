@@ -1,7 +1,7 @@
 [keybinds]
 # Personal
-"Mod+E" = "spawn:foot -e yazi"
-"Mod+Return" = "spawn:foot"
+"Mod+E" = "spawn:kitty -e yazi"
+"Mod+Return" = "spawn:kitty"
 "Mod+B" = "spawn:firefox"
 "Mod+G" = "spawn:flatpak run com.google.Chrome"
 "Mod+O" = "spawn:obs"
