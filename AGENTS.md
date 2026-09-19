@@ -11,15 +11,16 @@
 - 模板里读变量必须用安全写法 `{{ get . "theme" | default "tokyonight" }}`，
   直接 `{{ .theme }}` 会因 `missingkey=error` 炸掉。
 
-## 2. 铁律：五名合一
+## 2. 铁律：六名合一
 
-主题值必须同时等于以下五者，加新主题只加名字、不改逻辑：
+主题值必须同时等于以下六者，加新主题只加名字、不改逻辑：
 
 - `.chezmoitemplates/kitty/<value>.conf`
 - `starship.toml` 的 `[palettes.<value>]`
 - fcitx5 主题目录 `themes/<value>/`
 - yazi flavor 目录 `flavors/<value>.yazi/`
 - `.chezmoitemplates/niri/<value>.kdl`（经 `colour.kdl` 分发）
+- noctalia palette 文件 `palettes/<value>.json`（经 `custom_palette` 选中）
 
 打错主题名必须大声报错，禁止静默回落到默认分支。
 
@@ -32,10 +33,14 @@
 | fcitx5 | 整目录双份（flat 无 SVG），`classicui.conf` 里 `Theme={{ .theme }}` | 1 行 |
 | yazi | flavor 双份，`theme.toml` 里 `dark/light = "{{ .theme }}"` | 2 行 |
 | niri | `colour.kdl` 分发 `.chezmoitemplates/niri/<value>.kdl`（单 `layout` 块，中性值各片段自带） | 1 行 |
-| noctalia | 只留 `builtin_ids = gtk3/gtk4/qt` 给 GTK/Qt 用，`community_ids` 保持空；kitty/niri/yazi/fcitx5/starship 一律不管（noctalia 再生成它们的文件就是打架） | — |
+| noctalia | 自带 palette 双份 `palettes/<value>.json`（只写 `dark`，`light` 缺省回落 dark），`setting.toml` 里 `source = "custom"` + `custom_palette = "{{ .theme }}"`；`builtin_ids` 只留 gtk3/gtk4/qt 给 GTK/Qt 用，`community_ids` 保持空；kitty/niri/yazi/fcitx5/starship 一律不管（noctalia 再生成它们的文件就是打架） | 1 行 |
 
 原则：软件原生支持多主题用原生的（starship palettes）；没有才用 chezmoi 分发。
 fcitx5 主题禁止 SVG/透明色（出过生产事故：`fill-opacity < 1` 导致整框发虚），纯色优先。
+`make <theme>` 落盘后顺手热加载：fcitx5 走 `busctl … ReloadAddonConfig`、
+niri 走 `niri msg action load-config-file`、umbriel 走 `umbriel msg config-reload`、
+noctalia 走 `noctalia msg config-reload`；
+四行一律 `-@… || true`，没装对应软件/没跑 compositor 的机器静默跳过。
 
 ## 4. 色板（唯一真源，改色先改这里再同步各文件）
 

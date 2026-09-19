@@ -1,0 +1,23 @@
+# gruvbox-dark
+[colors]
+background = "#32302fFF"
+text_primary = "#ddc7a1FF"
+text_muted = "#ddc7a1FF"
+accent_primary = "#d8a657FF"
+accent_secondary = "#7daea3FF"
+warning = "#e78a4eFF"
+error = "#ea6962FF"
+insert_hint = "#d8a65780"
+backdrop = "#32302fFF"
+
+[colors.border]
+focused = "#d8a657FF"
+unfocused = "#1d2021FF"
+scratchpad_focused = "#e78a4eFF"
+scratchpad_unfocused = "#928374FF"
+outer = "#1d2021FF"
+
+[colors.overview]
+background_tint = "#1d202188"
+badge = "#d8a657FF"
+workspace_background = "#282828FF"

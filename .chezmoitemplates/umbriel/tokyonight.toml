@@ -1,0 +1,23 @@
+# tokyonight
+[colors]
+background = "#394260FF"
+text_primary = "#e3e5e5FF"
+text_muted = "#e3e5e5FF"
+accent_primary = "#7aa2f7FF"
+accent_secondary = "#7dcfffFF"
+warning = "#ff9e64FF"
+error = "#f7768eFF"
+insert_hint = "#7aa2f780"
+backdrop = "#394260FF"
+
+[colors.border]
+focused = "#7aa2f7FF"
+unfocused = "#1a1b26FF"
+scratchpad_focused = "#ff9e64FF"
+scratchpad_unfocused = "#545c7eFF"
+outer = "#1a1b26FF"
+
+[colors.overview]
+background_tint = "#1a1b2688"
+badge = "#7aa2f7FF"
+workspace_background = "#212736FF"

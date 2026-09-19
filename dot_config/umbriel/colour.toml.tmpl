@@ -1,0 +1,2 @@
+# Colours are theme-driven, see .chezmoitemplates/umbriel/<theme>.toml
+{{ includeTemplate (printf "umbriel/%s.toml" (get . "theme" | default "tokyonight")) . }}

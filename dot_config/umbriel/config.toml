@@ -4,7 +4,7 @@ files = [
   "keybinds.toml",
   "rules.toml",
   "startup.toml",
-  "noctalia.toml",
+  "colour.toml",
 ]
 
 [general]
@@ -17,7 +17,7 @@ honor_restored_maximize = false # let apps restore their saved maximized state
 
 [environment]
 # GTK_THEME = "Adwaita:dark"
-QT_QPA_PLATFORMTHEME = "qt5ct"
+QT_QPA_PLATFORMTHEME = "gtk3"
 ELECTRON_OZONE_PLATFORM_HINT = "wayland"
 GDK_BACKEND = "wayland,x11"
 QT_QPA_PLATFORM = "wayland;xcb"

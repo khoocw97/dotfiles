@@ -20,8 +20,10 @@ define apply-theme
 		{ echo "$(CONFIG) 主题行异常，先跑 make install"; exit 1; }
 	@sed -i 's/^theme = .*/theme = "$(1)"/' $(CONFIG)
 	@chezmoi apply
-	-@busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 ReloadAddonConfig s classicui >/dev/null 2>&1
-	-@niri msg action load-config-file >/dev/null 2>&1
+	-@busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 ReloadAddonConfig s classicui >/dev/null 2>&1 || true
+	-@niri msg action load-config-file >/dev/null 2>&1 || true
+	-@umbriel msg config-reload >/dev/null 2>&1 || true
+	-@noctalia msg config-reload >/dev/null 2>&1 || true
 	@echo Done
 endef
 
