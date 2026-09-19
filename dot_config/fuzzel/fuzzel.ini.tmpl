@@ -1,0 +1,2 @@
+# fuzzel config, colors driven by .theme (see AGENTS.md §2)
+{{ includeTemplate (printf "fuzzel/%s.ini" (get . "theme" | default "tokyonight")) . }}

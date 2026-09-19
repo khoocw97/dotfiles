@@ -12,7 +12,7 @@ help:
 	@echo "切换对应主题:"
 	@$(foreach t,$(THEMES),printf "\033[36m%-30s\033[0m %s\n" "$(t)" "make $(t)";)
 
-install: ## 安装dotfiles, 默认tokyonight或make install "theme"
+install: ## 安装dotfiles, 默认tokyonight
 	chezmoi apply --init
 
 define apply-theme
@@ -24,6 +24,7 @@ define apply-theme
 	-@niri msg action load-config-file >/dev/null 2>&1 || true
 	-@umbriel msg config-reload >/dev/null 2>&1 || true
 	-@noctalia msg config-reload >/dev/null 2>&1 || true
+	-@bat cache --build >/dev/null 2>&1 || true
 	@echo Done
 endef
 

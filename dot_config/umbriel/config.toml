@@ -5,6 +5,7 @@ files = [
   "rules.toml",
   "startup.toml",
   "colour.toml",
+  "animations.toml"
 ]
 
 [general]
@@ -42,7 +43,7 @@ corner_radius = 0              # 0-100
 # backdrop_color = "#000000FF"
 
 [appearance.blur]
-enabled = false
+enabled = true
 optimized = true
 passes = 3                     # 0-8
 radius = 3                     # 0-100
@@ -52,7 +53,7 @@ contrast = 0.9                 # 0.0-2.0
 saturation = 1.1               # 0.0-2.0
 
 [appearance.shadow]
-enabled = false
+enabled = true
 softness = 2                   # 0-200, 0 = hard edge
 offset_x = 2                   # -200 to 200
 offset_y = 2

@@ -1,12 +1,22 @@
+[output."Philips Consumer Electronics Company 27M2N5500L UK02439023425"]
+mode = "2560x1440@180"
+position = [0, 0]
+scale = 1.00
+tearing = true
+vrr = "fullscreen"
+hdr = "on"
+sdr_white = 450
+min_workspaces = 3
+
 [output.eDP-1]
 mode = "1920x1080@59.934"
 position = [0, 0]
 scale = 1.00
-workspaces = ["1", "2", "3"]
+min_workspaces = 3
 
 [output.HDMI-A-1]
 mode = "1920x1080@59.940"
 position = [1920, 0]
 scale = 1.00
-workspaces = ["1", "2", "3"]
+
 

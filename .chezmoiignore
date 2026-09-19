@@ -1,7 +1,10 @@
-{{- if ne .chezmoi.hostname "Niri-WM" }}
+{{- $d := env "XDG_CURRENT_DESKTOP" | lower }}
+{{- if contains "niri" $d }}
+.config/umbriel/**
+{{- else if contains "umbriel" $d }}
 .config/niri/**
-{{- end }}
-{{- if ne .chezmoi.hostname "Umbriel-WM" }}
+{{- else }}
+.config/niri/**
 .config/umbriel/**
 {{- end }}
 

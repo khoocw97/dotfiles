@@ -6,25 +6,44 @@ blur = false
 blur_optimized = true
 
 [[window_rule]]
+match.is_alone = true
+default_maximize = true
+
+# Noctalia settings
+[[window_rule]]
 match.app_id = "^dev.noctalia.Noctalia$"
 default_floating = true
-default_size = [1020, 900]
+default_floating_size_px = { width = 1020, height = 900 }
+blur_popups = false
 
 [[window_rule]]
 match.app_id = "^dev.noctalia.UmbrielSharePicker$"
 default_floating = true
 default_size = [800, 600]
 
-# [[window_rule]]
-# match.title = "^notificationtoasts_.+_desktop"
-# default_position = { x = 0, y = 0, anchor = "bottom_right" }
-# default_focused = false
-# default_pinned = true
+# Float utility windows
+[[window_rule]]
+match.app_id = "^(Emulator|zenity|xdg-desktop-portal|qalculate-gtk|org\\.pulseaudio\\.pavucontrol)$"
+default_floating = true
 
-# Window Rules
-# Converted from niri config
+# Float common dialogs by title
+[[window_rule]]
+match.title = "^(Open File|Select|Choose a wallpaper|Open Folder|Save As|Library|Choose Where to Download|File Operation Progress|Rename|Copy Files|Move Files|Search Files)"
+default_floating = true
 
-# Beeper - chat workspace (3), maximized, no focus
+[[window_rule]]
+match.app_id = "^steam$"
+default_workspace = 2
+default_maximize = true
+default_focused = true
+
+# Steam notification toasts
+[[window_rule]]
+match.title = "^notificationtoasts_.+_desktop"
+default_position = { x = 0, y = 0, anchor = "bottom_right" }
+default_focused = false
+default_pinned = true
+
 [[window_rule]]
 match.app_id = "^Beeper$"
 default_workspace = 3
@@ -32,8 +51,8 @@ default_maximize = true
 default_focused = false
 
 [[window_rule]]
-match.app_id = "^(helium|chromium)$"
-default_width = 0.75
+match.app_id = "^(firefox|helium|chromium)$"
+default_scrolling_extent = 0.75
 
 [[window_rule]]
 match.app_id = "^com[.]obsproject[.]Studio$"

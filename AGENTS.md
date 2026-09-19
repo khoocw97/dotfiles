@@ -11,9 +11,9 @@
 - 模板里读变量必须用安全写法 `{{ get . "theme" | default "tokyonight" }}`，
   直接 `{{ .theme }}` 会因 `missingkey=error` 炸掉。
 
-## 2. 铁律：六名合一
+## 2. 铁律：八名合一
 
-主题值必须同时等于以下六者，加新主题只加名字、不改逻辑：
+主题值必须同时等于以下八者，加新主题只加名字、不改逻辑：
 
 - `.chezmoitemplates/kitty/<value>.conf`
 - `starship.toml` 的 `[palettes.<value>]`
@@ -21,6 +21,8 @@
 - yazi flavor 目录 `flavors/<value>.yazi/`
 - `.chezmoitemplates/niri/<value>.kdl`（经 `colour.kdl` 分发）
 - noctalia palette 文件 `palettes/<value>.json`（经 `custom_palette` 选中）
+- bat 主题文件 `themes/<value>.tmTheme`（内置 `name` 必须等于主题值，`config` 里 `--theme={{ .theme }}`）
+- `.chezmoitemplates/fuzzel/<value>.ini`（经 `fuzzel.ini` 分发，只含 `[colors]`）
 
 打错主题名必须大声报错，禁止静默回落到默认分支。
 
@@ -33,6 +35,8 @@
 | fcitx5 | 整目录双份（flat 无 SVG），`classicui.conf` 里 `Theme={{ .theme }}` | 1 行 |
 | yazi | flavor 双份，`theme.toml` 里 `dark/light = "{{ .theme }}"` | 2 行 |
 | niri | `colour.kdl` 分发 `.chezmoitemplates/niri/<value>.kdl`（单 `layout` 块，中性值各片段自带） | 1 行 |
+| bat | 自带主题双份 `themes/<value>.tmTheme` + `config` 里 `--theme=` 一行；增量主题后必跑 `bat cache --build`（已进 Makefile） | 1 行 |
+| fuzzel | `fuzzel.ini` 分发 `.chezmoitemplates/fuzzel/<value>.ini`（只含 `[colors]`，RGBA 无 `#` 小写） | 1 行 |
 | noctalia | 自带 palette 双份 `palettes/<value>.json`（只写 `dark`，`light` 缺省回落 dark），`setting.toml` 里 `source = "custom"` + `custom_palette = "{{ .theme }}"`；`builtin_ids` 只留 gtk3/gtk4/qt 给 GTK/Qt 用，`community_ids` 保持空；kitty/niri/yazi/fcitx5/starship 一律不管（noctalia 再生成它们的文件就是打架） | 1 行 |
 
 原则：软件原生支持多主题用原生的（starship palettes）；没有才用 chezmoi 分发。
@@ -57,8 +61,8 @@ aqua `#89b482` / purple `#d3869b` / grey `#928374`
 
 ## 5. 机器分流
 
-`.chezmoiignore` 按 `.chezmoi.hostname`（= `uname -n`）ignore 整目录：
-Niri-WM 只留 niri，Umbriel-WM 只留 umbriel。source 根的非管理文件
+`.chezmoiignore` 按 `XDG_CURRENT_DESKTOP`（=`env "XDG_CURRENT_DESKTOP"|lower`）ignore 整目录：
+含 `niri` 只留 niri，含 `umbriel` 只留 umbriel。source 根的非管理文件
 （Makefile、README.md、AGENTS.md 等）必须同步加进 `.chezmoiignore`，
 否则会被当成 `~/` 目标文件。
 

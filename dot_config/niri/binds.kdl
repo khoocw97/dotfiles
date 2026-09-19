@@ -49,7 +49,7 @@ binds {
     XF86PowerOff { spawn "systemctl" "poweroff"; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     // Quit niri session
-    Mod+Shift+E { quit; }
+    Mod+Shift+Q { quit; }
     // Reload niri config
     Mod+Shift+R hotkey-overlay-title="Reload Niri Config" { spawn "niri" "msg" "action" "load-config-file"; }
 
@@ -64,10 +64,8 @@ binds {
     Mod+R { switch-preset-column-width; }
     Mod+T { toggle-window-floating; }
 
-    Mod+Comma { consume-window-into-column; }
-    Mod+Period { expel-window-from-column; }
-    Mod+BracketLeft  { consume-or-expel-window-left; }
-    Mod+BracketRight { consume-or-expel-window-right; }
+    Mod+Period  { consume-or-expel-window-left; }
+    Mod+Comma { consume-or-expel-window-right; }
 
     Mod+Home { focus-column-first; }
     Mod+End { focus-column-last; }
