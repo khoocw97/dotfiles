@@ -1,5 +1,3 @@
-# Window and layer rules (see docs/user/rules.md) ---------------------------
-
 # Blur all windows
 [[window_rule]]
 blur = false
@@ -13,7 +11,7 @@ default_maximize = true
 [[window_rule]]
 match.app_id = "^dev.noctalia.Noctalia$"
 default_floating = true
-default_floating_size_px = { width = 1020, height = 900 }
+default_floating_size_px = { width = 1920, height = 1080 }
 blur_popups = false
 
 [[window_rule]]
@@ -28,7 +26,7 @@ default_floating = true
 
 # Float common dialogs by title
 [[window_rule]]
-match.title = "^(Open File|Select|Choose a wallpaper|Open Folder|Save As|Library|Choose Where to Download|File Operation Progress|Rename|Copy Files|Move Files|Search Files)"
+match.title = "^(Open File|Select|Choose a wallpaper|Open Folder|Save As|Library|Choose Where to Download|File Operation Progress|Rename|Copy Files|Move Files|Search Files|.*Properties)"
 default_floating = true
 
 [[window_rule]]
@@ -39,20 +37,41 @@ default_focused = true
 
 # Steam notification toasts
 [[window_rule]]
+match.app_id = "^steam$"
 match.title = "^notificationtoasts_.+_desktop"
-default_position = { x = 0, y = 0, anchor = "bottom_right" }
+default_position = { x = 10, y = 10, anchor = "bottom_right" }
 default_focused = false
 default_pinned = true
 
+[[window_rule]]
+match.app_id = "^(firefox|helium|chromium)$"
+default_scrolling_extent = 0.75
+
+[[window_rule]]
+match.title = "^Picture-in-Picture$"
+default_floating = true
+
+[[window_rule]]
+match.app_id = "^zoom$"
+default_floating = true
+
+# GNOME settings apps - tiled, 0.5 width
+[[window_rule]]
+match.app_id = "^(gnome-control-center|pavucontrol|nm-connection-editor)$"
+default_scrolling_extent = 0.5
+default_floating = false
+
+# GNOME calculators and small utilities - floating
+[[window_rule]]
+match.app_id = "^(org\\.gnome\\.Calculator|gnome-calculator|galculator|blueman-manager|xdg-desktop-portal)$"
+default_floating = true
+
+# custom rule
 [[window_rule]]
 match.app_id = "^Beeper$"
 default_workspace = 3
 default_maximize = true
 default_focused = false
-
-[[window_rule]]
-match.app_id = "^(firefox|helium|chromium)$"
-default_scrolling_extent = 0.75
 
 [[window_rule]]
 match.app_id = "^com[.]obsproject[.]Studio$"
@@ -73,36 +92,4 @@ match.app_id = "PrintTerminal"
 default_floating = true
 default_floating_size_px = { width = 600, height = 400 }
 default_position = { x = 15, y = 15, anchor = "bottom_right" }
-
-# GNOME settings apps - tiled, 0.5 width
-[[window_rule]]
-match.app_id = "^(gnome-control-center|pavucontrol|nm-connection-editor)$"
-default_scrolling_extent = 0.5
-default_floating = false
-
-# GNOME calculators and small utilities - floating
-[[window_rule]]
-match.app_id = "^(org\\.gnome\\.Calculator|gnome-calculator|galculator|blueman-manager|xdg-desktop-portal)$"
-default_floating = true
-
-# Steam notification toasts - bottom-right, no focus
-[[window_rule]]
-match.app_id = "^steam$"
-match.title = "^notificationtoasts_"
-default_position = { x = 10, y = 10, anchor = "bottom_right" }
-default_focused = false
-
-# Firefox PiP and Zoom - floating
-[[window_rule]]
-match.title = "^Picture-in-Picture$"
-default_floating = true
-
-[[window_rule]]
-match.app_id = "^zoom$"
-default_floating = true
-
-# Slight transparency for editors
-[[window_rule]]
-match.app_id = "^(code|org\\.gnome\\.Nautilus)$"
-opacity = 0.97
 
