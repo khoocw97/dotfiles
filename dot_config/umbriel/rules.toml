@@ -3,9 +3,12 @@
 blur = false
 blur_optimized = true
 
-[[window_rule]]
-match.is_alone = true
-default_maximize = true
+# [[window_rule]]
+# match.is_alone = true
+# default_scrolling_extent = 1.0
+# [[window_rule]]
+# match.is_alone = false
+# default_scrolling_extent = 0.5
 
 # Noctalia settings
 [[window_rule]]
@@ -42,10 +45,6 @@ match.title = "^notificationtoasts_.+_desktop"
 default_position = { x = 10, y = 10, anchor = "bottom_right" }
 default_focused = false
 default_pinned = true
-
-[[window_rule]]
-match.app_id = "^(firefox|helium|chromium)$"
-default_scrolling_extent = 0.75
 
 [[window_rule]]
 match.title = "^Picture-in-Picture$"
