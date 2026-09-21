@@ -6,7 +6,7 @@
 
 - 变量 `theme`，合法值只有两个：`tokyonight`（默认）、`gruvbox-dark`。
 - 存放：`~/.config/chezmoi/chezmoi.toml` 的 `[data] theme`；默认值在 `.chezmoi.toml.tmpl`。
-- 切换：`make <theme>`（如 `make gruvbox-dark`），初装 `make install`。临时的单次覆盖用
+- 切换：`make <theme>`（如 `make gruvbox-dark`），初装 `make install`，重置 `make reset`（= `make tokyonight`）。临时的单次覆盖用
   `chezmoi <cmd> --override-data '{"theme":"gruvbox-dark"}'`（不持久化）。
 - 模板里读变量必须用安全写法 `{{ get . "theme" | default "tokyonight" }}`，
   直接 `{{ .theme }}` 会因 `missingkey=error` 炸掉。
