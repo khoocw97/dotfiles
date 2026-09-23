@@ -1,2 +1,8 @@
-# fuzzel config, colors driven by .theme (see AGENTS.md §2)
+# shared settings (font matches kitty) + theme colors via .theme (see AGENTS.md §2)
+font=Maple Mono NF CN:size=12
 {{ includeTemplate (printf "fuzzel/%s.ini" (get . "theme" | default "tokyonight")) . }}
+
+[border]
+width=5
+radius=0
+selection-radius=0

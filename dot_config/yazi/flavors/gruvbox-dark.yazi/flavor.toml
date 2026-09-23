@@ -13,7 +13,7 @@ find_position = { fg = "#d3869b", bg = "reset", bold = true, italic = true }
 marker_copied   = { fg = "#a9b665", bg = "#a9b665" }
 marker_cut      = { fg = "#ea6962", bg = "#ea6962" }
 marker_marked   = { fg = "#89b482", bg = "#89b482" }
-marker_selected = { fg = "#d8a657", bg = "#d8a657" }
+marker_selected = { fg = "#928374", bg = "#928374" }
 
 # Count
 count_copied   = { fg = "#1d2021", bg = "#a9b665" }

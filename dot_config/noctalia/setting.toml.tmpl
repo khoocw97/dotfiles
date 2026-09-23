@@ -1,6 +1,6 @@
 [accessibility]
 high_contrast = false
-ui_scale = 1.5
+ui_scale = 1.25
 
 [audio]
 enable_overdrive = false
@@ -28,11 +28,11 @@ order = [ "default" ]
     capsule_opacity = 1.0
     capsule_padding = 6.0
     capsule_thickness = 0.75999999046325684
-    center = [ "clock", "control-center", "date" ]
-    concave_edge_corners = true
+    center = [ "date", "cat", "clock" ]
+    concave_edge_corners = false
     contact_shadow = false
     enabled = true
-    end = [ "tray", "notifications", "clipboard", "network", "widget" ]
+    end = [ "tray", "notifications", "network", "widget", "battery" ]
     font_scale = 1.0
     font_weight = 500
     hover_highlight = true
@@ -40,7 +40,7 @@ order = [ "default" ]
     margin_edge = 0
     margin_ends = 0
     margin_opposite_edge = 0
-    padding = 14
+    padding = 10
     panel_overlap = 1
     position = "top"
     radius = 0
@@ -53,7 +53,7 @@ order = [ "default" ]
     shadow = true
     show_on_workspace_switch = true
     smart_auto_hide = false
-    start = [ "workspaces", "cat" ]
+    start = [ "workspaces" ]
     thickness = 34
     widget_spacing = 12
 
@@ -63,10 +63,10 @@ order = [ "default" ]
 warning_threshold = 10
 
 [brightness]
-enable_ddcutil = false
+enable_ddcutil = true
 ignore_mmids = []
 minimum_brightness = 0.0
-sync_all_monitors = false
+sync_all_monitors = true
 
 [calendar]
 enabled = false
@@ -84,7 +84,7 @@ width = 700
 
     [control_center.calendar]
     show_events_card = true
-    show_week_numbers = false
+    show_week_numbers = true
 
     [[control_center.shortcuts]]
     type = "wifi"
@@ -99,10 +99,10 @@ width = 700
     type = "nightlight"
 
     [[control_center.shortcuts]]
-    type = "notification"
+    type = "power_profile"
 
     [[control_center.shortcuts]]
-    type = "power_profile"
+    type = "notification"
 
 [desktop_widgets]
 enabled = false
@@ -121,7 +121,7 @@ auto_hide = false
 background_opacity = 0.87999999523162842
 border = "outline"
 border_width = 0.0
-concave_edge_corners = true
+concave_edge_corners = false
 cross_axis_padding = 8
 enabled = false
 icon_size = 48
@@ -141,11 +141,11 @@ margin_ends = 0
 monitors = []
 pinned = []
 position = "bottom"
-radius = 16
-radius_bottom_left = 16
-radius_bottom_right = 16
-radius_top_left = 16
-radius_top_right = 16
+radius = 0
+radius_bottom_left = 0
+radius_bottom_right = 0
+radius_top_left = 0
+radius_top_right = 0
 reserve_space = true
 shadow = true
 show_dots = false
@@ -216,10 +216,10 @@ pre_action_fade_seconds = 2.0
     [idle.behavior.screen-off]
     action = "screen_off"
     command = ""
-    enabled = false
+    enabled = true
     locked_timeout = 0.0
     resume_command = ""
-    timeout = 660.0
+    timeout = 900.0
 
 [keybinds]
 cancel = [ "Escape" ]
@@ -236,7 +236,7 @@ validate = [ "Return", "KP_Enter", "space" ]
 
 [location]
 address = ""
-auto_locate = false
+auto_locate = true
 custom_schedule = false
 sunrise = ""
 sunset = ""
@@ -252,44 +252,6 @@ monitors = []
 tint_intensity = 0.30000001192092896
 wallpaper = ""
 
-[lockscreen_widgets]
-enabled = false
-schema_version = 2
-widget_order = [ "lockscreen-login-box@DP-2" ]
-
-    [lockscreen_widgets.grid]
-    cell_size = 16
-    major_interval = 4
-    visible = true
-
-    [lockscreen_widgets.widget."lockscreen-login-box@DP-2"]
-    box_height = 196.0
-    box_width = 810.0
-    cx = 1280.0
-    cy = 1258.0
-    enabled = true
-    output = "DP-2"
-    placement_height = 1440.0
-    placement_width = 2560.0
-    rotation = 0.0
-    type = "login_box"
-
-        [lockscreen_widgets.widget."lockscreen-login-box@DP-2".settings]
-        background_color = "surface_variant"
-        background_opacity = 0.88
-        background_radius = 12.0
-        center_password_text = false
-        input_opacity = 1.0
-        input_radius = 6.0
-        layout = "regular"
-        show_caps_lock = true
-        show_keyboard_layout = true
-        show_login_button = true
-        show_media = true
-        show_session_buttons = true
-        show_unlock_hint = true
-        show_weather = true
-
 [nightlight]
 enabled = false
 force = false
@@ -302,11 +264,12 @@ border = true
 collapse_on_dismiss = true
 enable_daemon = true
 history_retention_hours = 0
+keep_dismissed_in_history = true
 layer = "top"
 max_visible = 0
 monitors = []
-offset_x = 20
-offset_y = 8
+offset_x = 0
+offset_y = 1
 position = "top_right"
 scale = 1.0
 show_actions = true
@@ -317,8 +280,8 @@ background_opacity = 0.97000002861022949
 border = true
 enabled = true
 monitors = []
-offset_x = 20
-offset_y = 8
+offset_x = 0
+offset_y = 5
 orientation = "horizontal"
 position = "top_center"
 position_vertical = "top_center"
@@ -342,11 +305,12 @@ scale = 1.0
     wifi = true
 
 [plugin_settings."blackbartblues/audio-switcher"]
-audio-switcher_placement = "floating"
+audio-switcher_placement = "attached"
+show_notification_on_switch = false
 
 [plugins]
 auto_update = "all"
-enabled = [ "dotnetrob/cat", "icefish/phone-connect", "blackbartblues/audio-switcher" ]
+enabled = [ "dotnetrob/cat", "blackbartblues/audio-switcher" ]
 
     [[plugins.source]]
     enabled = true
@@ -371,8 +335,8 @@ clipboard_enabled = true
 clipboard_history_max_entries = 100
 clipboard_image_action_command = ""
 clipboard_keep_from_closed_apps = true
-corner_radius_scale = 1.0
-date_format = "%A, %x"
+corner_radius_scale = 0.0
+date_format = "{:%A %d/%m/%y}"
 disable_mipmaps = false
 external_ip_enabled = true
 font_family = "LXGW Bright GB"
@@ -393,7 +357,7 @@ setup_wizard_enabled = true
 shared_gl_context = true
 show_location = true
 telemetry_enabled = false
-time_format = "{:%H:%M}"
+time_format = "{:%r}"
 
     [shell.animation]
     enabled = true
@@ -427,7 +391,7 @@ time_format = "{:%H:%M}"
     clipboard_placement = "floating"
     clipboard_position = "center"
     control_center_placement = "attached"
-    control_center_position = "auto"
+    control_center_position = "center"
     floating_layer = "overlay"
     floating_offset = 8
     launcher_placement = "floating"
@@ -457,6 +421,8 @@ time_format = "{:%H:%M}"
     size = 32
 
     [shell.screenshot]
+    annotate = false
+    close_on_copy = true
     confirm_region = false
     copy_to_clipboard = true
     directory = ""
@@ -464,13 +430,13 @@ time_format = "{:%H:%M}"
     freeze_screen = true
     pipe_command = ""
     pipe_to_command = false
-    remember_last_region = false
+    remember_last_region = true
     save_to_file = true
     show_cursor = false
 
     [shell.session]
     grid = false
-    grid_columns = 3
+    grid_columns = 5
     show_shortcuts = true
 
         [shell.session.power]
@@ -479,20 +445,20 @@ time_format = "{:%H:%M}"
         action = "lock"
         command = ""
         countdown_seconds = 0.0
-        enabled = false
+        enabled = true
         glyph = ""
         label = ""
-        shortcut = "1"
+        shortcut = "space"
         variant = "default"
 
         [[shell.session.actions]]
         action = "logout"
         command = ""
         countdown_seconds = 0.0
-        enabled = false
+        enabled = true
         glyph = ""
         label = ""
-        shortcut = "2"
+        shortcut = "l"
         variant = "default"
 
         [[shell.session.actions]]
@@ -575,11 +541,13 @@ swap_pct_critical_threshold = 80.0
 
 [theme]
 builtin = "Tokyo-Night"
-custom_palette = '{{ get . "theme" | default "tokyonight" }}'
+community_palette = "Oxocarbon"
+custom_palette = "{{ get . "theme" | default "tokyonight" }}"
 mode = "dark"
 pure_black_dark = false
 shell_mode = "follow"
 source = "custom"
+wallpaper_scheme = "soft"
 
     [theme.templates]
     builtin_ids = [ "gtk3", "gtk4", "qt" ]
@@ -620,9 +588,15 @@ title_scroll = "none"
 type = "active_window"
 
 [widget.cat]
+anchor = true
 cat_color_mode = "custom"
+cat_size = 32
 interactive = false
 type = "dotnetrob/cat:cat"
+
+[widget.clock]
+format = "{:%r}"
+type = "clock"
 
 [widget.control-center]
 anchor = true
@@ -634,7 +608,7 @@ stat = "cpu_usage"
 type = "sysmon"
 
 [widget.date]
-format = "{:%a %d %b}"
+format = "{:%A %d/%m/%y}"
 type = "clock"
 
 [widget.input_volume]
@@ -659,6 +633,10 @@ max_length = 220.0
 min_length = 80.0
 title_scroll = "none"
 type = "media"
+
+[widget.network]
+show_label = false
+type = "network"
 
 [widget.network_rx]
 stat = "net_rx"
@@ -687,6 +665,10 @@ type = "sysmon"
 [widget.theme_mode]
 enabled = false
 type = "theme_mode"
+
+[widget.tray]
+drawer = true
+type = "tray"
 
 [widget.volume]
 enabled = false
