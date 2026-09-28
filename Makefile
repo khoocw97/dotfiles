@@ -8,7 +8,7 @@ THEMES := gruvbox-dark tokyonight
 
 help:
 	@echo ""
-	@echo "You can use make install <theme> to init and bypass default theme"
+	@echo "Run make install for first-time setup (prompts for theme)"
 	@echo ""
 	@grep -E '^[a-zA-Z0-9_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 	| sort \

@@ -1,0 +1,54 @@
+# .bashrc
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
+
+# User specific environment
+if ! [[ "$PATH" =~ "$HOME/.local/bin:$HOME/bin:" ]]; then
+    PATH="$HOME/.local/bin:$HOME/bin:$PATH"
+fi
+export PATH
+
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
+
+# User specific aliases and functions
+if [ -d ~/.bashrc.d ]; then
+    for rc in ~/.bashrc.d/*; do
+        if [ -f "$rc" ]; then
+            . "$rc"
+        fi
+    done
+fi
+unset rc
+
+# starship prompt
+eval "$(starship init bash)"
+
+# zoxide init
+eval "$(zoxide init bash)"
+
+# eza & bat aliases
+alias ll='eza -l --icons=auto --group-directories-first'
+alias l.='eza -d .*'
+alias ls='eza'
+alias l1='eza -1'
+alias cat='bat --style=plain --pager=never'
+alias lsblk='lsblk | bat -l conf -p'
+alias mv='mv -i'
+alias rm='rm -Iv'
+alias df='df -h'
+
+# opencode
+export PATH=/home/weng/.opencode/bin:$PATH
+
+# chezmoi
+alias cz='chezmoi'
+alias cze='chezmoi edit'
+alias cza='chezmoi add'
+alias czf='chezmoi forget'
+alias czra='chezmoi re-add'
+alias czm='chezmoi merge'
+alias czap='chezmoi apply'

@@ -2,3 +2,24 @@ sourceDir = "~/Project/dotfiles"
 
 [data]
 theme = "tokyonight"
+
+[edit]
+    command = "zed"
+    args = ["--wait"]
+
+[merge]
+    command = "meld"
+    args = [
+        "--diff",
+        {{ printf "%q" "{{ .Destination }}" }},
+        {{ printf "%q" "{{ .Source }}" }},
+        {{ printf "%q" "{{ .Target }}" }},
+    ]
+
+[diff]
+    command = "meld"
+    args = [
+        "--diff",
+        {{ printf "%q" "{{ .Destination }}" }},
+        {{ printf "%q" "{{ .Target }}" }},
+    ]
