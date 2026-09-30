@@ -14,6 +14,9 @@ hotkey-overlay {
 environment {
     XDG_CURRENT_DESKTOP "niri"
     XDG_SESSION_TYPE "wayland"
+    // for xwayland & x11 (cursor.kdl only affects wayland)
+    XCURSOR_THEME "Bibata-Modern-Ice"
+    XCURSOR_SIZE "24"
     GTK_IM_MODULE ""
     ELECTRON_OZONE_PLATFORM_HINT "auto"
     QT_QPA_PLATFORM "wayland"
