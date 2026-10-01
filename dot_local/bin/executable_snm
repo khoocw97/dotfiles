@@ -1,0 +1,195 @@
+#!/bin/bash
+# snm: NetworkManager TUI(方向键操作,零依赖)
+# 用法: 直接运行 snm,↑↓ 选择,回车确定,q/Esc 退出
+# 依赖: nmcli (NetworkManager)
+
+# 取第一块网卡，多网卡时用 WLAN_DEV=/LAN_DEV= 环境变量覆盖
+_DEVS=$(nmcli -t -f DEVICE,TYPE device status 2>/dev/null)
+WLAN_DEV="${WLAN_DEV:-$(printf '%s\n' "$_DEVS" | awk -F: '$2=="wifi"{print $1; exit}')}"
+WLAN_DEV="${WLAN_DEV:-wlan0}"
+LAN_DEV="${LAN_DEV:-$(printf '%s\n' "$_DEVS" | awk -F: '$2=="ethernet"{print $1; exit}')}"
+LAN_DEV="${LAN_DEV:-eth0}"
+
+# 开头检测一次 WiFi 设备是否存在，后续按需使用，不再重复检查
+HAS_WIFI=0
+nmcli -t -f DEVICE,TYPE device status 2>/dev/null | grep -qxF "$WLAN_DEV:wifi" && HAS_WIFI=1
+
+dev_state() {
+    nmcli -t -f DEVICE,STATE device status 2>/dev/null | awk -F: -v d="$1" '$1==d{print $2}'
+}
+
+wifi_disconnect() {
+    local st
+    st=$(dev_state "$WLAN_DEV")
+    if [[ $st != connected* ]]; then
+        echo "Wi-Fi 当前未连接，无需断开"
+        return 0
+    fi
+    echo "正在断开 Wi-Fi 连接..."
+    nmcli device disconnect "$WLAN_DEV" >/dev/null
+}
+
+lan_up() {
+    echo "正在启用有线网卡 ($LAN_DEV)..."
+    nmcli device connect "$LAN_DEV" >/dev/null
+}
+
+lan_down() {
+    local st
+    st=$(dev_state "$LAN_DEV")
+    if [[ $st != connected* ]]; then
+        echo "有线网当前未连接，无需禁用"
+        return 0
+    fi
+    echo "正在禁用有线网卡 ($LAN_DEV)..."
+    nmcli device disconnect "$LAN_DEV" >/dev/null
+}
+
+net_restart() {
+    echo "正在重启网络服务 (polkit 认证)..."
+    systemctl restart NetworkManager
+}
+
+show_status() {
+    echo "=== 网络状态 ==="
+    nmcli general status
+    echo ""
+    echo "=== 设备状态 ==="
+    nmcli device status
+}
+
+showcur() { tput cnorm >&2 2>/dev/null; }
+
+# 刷新列表只显示 SSID/BARS/SIGNAL 三列
+wifi_list() {
+    printf '%-30s %6s %s\n' "SSID" "SIGNAL" "BAR"
+    nmcli -t -f SSID,BARS,SIGNAL device wifi list 2>/dev/null \
+        | grep -v '^:' | awk -F: 'NF>=3{signal=$NF; sub(/:[^:]*$/,""); bars=$NF; sub(/:[^:]*$/,""); printf "%-30s %6s %s\n", $0, signal, bars}'
+}
+
+pause() {
+    read -n1 -srp "按任意键返回菜单..."
+    echo
+}
+
+read_key() {
+    local k k2
+    IFS= read -rsn1 k || { echo esc; return; }
+    if [[ $k == $'\e' ]]; then
+        IFS= read -rsn2 -t 0.1 k2 || { echo esc; return; } # 无后续字节=单独按了Esc
+        case "$k2" in
+            "[A") echo up ;;
+            "[B") echo down ;;
+            *) echo unknown ;;
+        esac
+    elif [[ -z $k ]]; then
+        echo enter
+    else
+        echo "$k"
+    fi
+}
+
+tui_pick() {
+    local prompt=$1; shift
+    local -a items=("$@")
+    local n=$# sel=0 i m
+    [ "$n" -eq 0 ] && return 1
+    tput civis >&2 2>/dev/null
+    while true; do
+        clear >&2
+        printf '%s\n' "$prompt" >&2
+        for i in "${!items[@]}"; do
+            m=" "; [ "$i" -eq "$sel" ] && m=">"
+            printf '   %s %s\n' "$m" "${items[$i]}" >&2
+        done
+        case $(read_key) in
+            up) sel=$(( (sel - 1 + n) % n )) ;;
+            down) sel=$(( (sel + 1) % n )) ;;
+            enter) showcur; printf '%s\n' "${items[$sel]}"; return 0 ;;
+            q|esc) showcur; return 1 ;;
+            *) ;;
+        esac
+    done
+}
+
+# 执行连接并中文反馈(总返回0,pause 由调用方处理)
+do_connect() {
+    if nmcli device wifi connect "$ssid" "$@" ifname "$WLAN_DEV" >/dev/null; then
+        echo "连接成功"
+    else
+        echo "连接失败"
+    fi
+    return 0
+}
+
+pick_and_connect() {
+    local lines line ssid
+    mapfile -t lines < <(nmcli -t -f SSID,BARS device wifi list --rescan no ifname "$WLAN_DEV" 2>/dev/null \
+        | grep -v '^:' | sort -t: -k1,1 -u)
+    [ "${#lines[@]}" -eq 0 ] && { echo "没有扫描到 Wi-Fi"; return 0; }
+    line=$(tui_pick "选择 Wi-Fi (↑↓ 回车 q):" "${lines[@]}") || return 1
+    ssid=${line%:*}
+    [ -z "$ssid" ] && return 1
+    # 已保存的连接直接连(用存好的密码);开放网络也直接连;新的加密网络中文提示输密码
+    if nmcli -t -f NAME connection show 2>/dev/null | grep -qxF "$ssid"; then
+        echo "正在连接到 Wi-Fi: $ssid ..."
+        do_connect
+    else
+        local l sec=""
+        while IFS= read -r l; do
+            if [ "${l%:*}" = "$ssid" ]; then sec=${l##*:}; break; fi
+        done < <(nmcli -t -f SSID,SECURITY device wifi list --rescan no ifname "$WLAN_DEV" 2>/dev/null)
+        if [ "$sec" = "--" ] || [ -z "$sec" ]; then
+            echo "正在连接到开放网络: $ssid ..."
+            do_connect
+        else
+            local psk
+            read -rsp "请输入 [$ssid] 的 Wi-Fi 密码: " psk; echo # -s 不回显,补换行
+            [ -z "$psk" ] && return 1
+            echo "正在连接到 Wi-Fi: $ssid ..."
+            do_connect password "$psk"
+        fi
+    fi
+    return 0
+}
+
+pick_and_forget() {
+    local conns conn
+    mapfile -t conns < <(nmcli -t -f NAME,TYPE connection show 2>/dev/null \
+        | awk -F: '$NF=="802-11-wireless"{sub(/:[^:]*$/,""); print}' | sort -u)
+    [ "${#conns[@]}" -eq 0 ] && { echo "没有已保存的连接"; return 0; }
+    conn=$(tui_pick "忘记哪个? (↑↓ 回车 q):" "${conns[@]}") || return 1
+    [ -z "$conn" ] && return 1
+    echo "正在删除保存的连接: $conn ..."
+    nmcli connection delete "$conn" >/dev/null
+    return 0
+}
+
+show_tui() {
+    [ "$HAS_WIFI" = 0 ] && echo "提示: 本机没有检测到 WiFi 设备，已隐藏 WiFi 相关选项"
+    local actions=()
+    if [ "$HAS_WIFI" = 1 ]; then
+        actions+=("连接 WiFi" "断开 WiFi" "重新扫描" "忘记已保存 WiFi")
+    fi
+    actions+=("启用有线网" "禁用有线网" "重启网络服务" "查看状态" "退出")
+    local action
+    trap 'showcur; exit 130' INT
+    while true; do
+        action=$(tui_pick "Simple Network Manager (↑↓ 选择, 回车确定, q 返回/退出)" "${actions[@]}") || break
+        case "$action" in
+            "连接 WiFi") pick_and_connect && pause ;;
+            "断开 WiFi") wifi_disconnect; pause ;;
+            "重新扫描") wifi_list; pause ;;
+            "忘记已保存 WiFi") pick_and_forget && pause ;;
+            "启用有线网") lan_up; pause ;;
+            "禁用有线网") lan_down; pause ;;
+            "重启网络服务") net_restart; pause ;;
+            "查看状态") show_status; pause ;;
+            "退出") break ;;
+        esac
+    done
+    showcur
+    trap - INT
+}
+
+show_tui

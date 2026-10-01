@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+
+install_opentabletdriver() {
+    echo "Installing OpenTabletDriver..."
+
+    # Temporary directory
+    mkdir -p /tmp/OpenTabletDriver
+
+    # Download latest OTD release
+    curl -fL \
+        "https://api.github.com/repos/OpenTabletDriver/OpenTabletDriver/releases/latest" \
+        | grep -oP '"browser_download_url":\s*"\K[^"]+(?=")' \
+        | grep -P 'opentabletdriver.*linux.*binary.*tar\.gz$' \
+        | head -1 \
+        | xargs -r curl -fL -o /tmp/OpenTabletDriver/opentabletdriver.tar.gz
+
+    # Make sure the archive was downloaded
+    if [[ ! -s /tmp/OpenTabletDriver/opentabletdriver.tar.gz ]]; then
+        echo "Error: Failed to download OpenTabletDriver."
+        rm -rf /tmp/OpenTabletDriver
+        return 1
+    fi
+
+    # Extract
+    tar --strip-components=1 \
+        -xzf /tmp/OpenTabletDriver/opentabletdriver.tar.gz \
+        -C /tmp/OpenTabletDriver
+
+    # Install udev rules
+    if [[ -f /tmp/OpenTabletDriver/etc/udev/rules.d/70-opentabletdriver.rules ]]; then
+        sudo cp \
+            /tmp/OpenTabletDriver/etc/udev/rules.d/70-opentabletdriver.rules \
+            /etc/udev/rules.d/71-opentabletdriver.rules
+    else
+        echo "Error: OTD udev rules not found."
+        rm -rf /tmp/OpenTabletDriver
+        return 1
+    fi
+
+    rm -rf /tmp/OpenTabletDriver
+
+    # Add Flathub
+    flatpak remote-add --if-not-exists \
+        flathub https://flathub.org/repo/flathub.flatpakrepo
+
+    # Install OTD Flatpak
+    flatpak --system install -y \
+        flathub net.opentabletdriver.OpenTabletDriver
+
+    # OTD configuration directory
+    mkdir -p "$HOME/.config/OpenTabletDriver"
+
+    flatpak override --user \
+        --filesystem=xdg-config/OpenTabletDriver \
+        net.opentabletdriver.OpenTabletDriver
+
+    # Install official Flathub systemd user service
+    mkdir -p "$HOME/.config/systemd/user"
+
+    curl -fL \
+        "https://raw.githubusercontent.com/flathub/net.opentabletdriver.OpenTabletDriver/refs/heads/master/scripts/opentabletdriver.service" \
+        -o "$HOME/.config/systemd/user/opentabletdriver.service"
+
+    # Make sure the service file was downloaded
+    if [[ ! -s "$HOME/.config/systemd/user/opentabletdriver.service" ]]; then
+        echo "Error: Failed to download OpenTabletDriver systemd service."
+        return 1
+    fi
+
+    systemctl --user daemon-reload
+    systemctl --user enable --now opentabletdriver.service
+
+    echo
+    echo "OpenTabletDriver installed successfully."
+    echo
+    systemctl --user --no-pager status opentabletdriver.service
+}
+
+uninstall_opentabletdriver() {
+    echo "Uninstalling OpenTabletDriver..."
+
+    systemctl --user disable --now opentabletdriver.service 2>/dev/null || true
+
+    rm -f "$HOME/.config/systemd/user/opentabletdriver.service"
+
+    systemctl --user daemon-reload
+
+    sudo rm -f /etc/udev/rules.d/71-opentabletdriver.rules
+
+    flatpak --system remove -y \
+        net.opentabletdriver.OpenTabletDriver
+
+    echo "OpenTabletDriver uninstalled successfully."
+}
+
+echo "OpenTabletDriver"
+echo
+echo "1) Install"
+echo "2) Uninstall"
+echo "3) Exit"
+echo
+
+read -rp "选择 [1-3]: " choice
+
+case "$choice" in
+    1)
+        install_opentabletdriver
+        ;;
+    2)
+        uninstall_opentabletdriver
+        ;;
+    3)
+        exit 0
+        ;;
+    *)
+        echo "无效选择"
+        ;;
+esac

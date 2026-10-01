@@ -2,11 +2,11 @@
 spawn-at-startup "noctalia"
 spawn-at-startup "fcitx5" "-d"
 spawn-sh-at-startup "[ -f ~/.config/user-dirs.dirs ] || xdg-user-dirs-update" // 首次登录创建 XDG 目录,之后跳过
-spawn-sh-at-startup "~/.local/bin/sbz-speaker.sh"
+spawn-sh-at-startup "~/.local/bin/sbz-speaker" // for desktop
 
 // Personal Startup
 spawn-at-startup "sunshine"
-// spawn-sh-at-startup "~/.local/bin/fix_audio.sh"
+// spawn-sh-at-startup "~/.local/bin/msige602pl-fix-audio" // for laptop
 // spawn-at-startup "~/AppImages/beeper.appimage"
 
 // Personal Workspaces

@@ -1,0 +1,14 @@
+#!/bin/bash
+(
+    sleep 5
+    amixer -c 1 sset Headphone unmute 100
+    amixer -c 1 sset Master unmute 100
+    amixer -c 1 sset Speaker unmute 100
+    amixer -c 1 sset PCM 0dB 
+)&
+
+
+
+
+
+

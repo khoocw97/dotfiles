@@ -1,0 +1,23 @@
+#!/bin/bash
+# 简单 wrapper：把路径包进 "" 再传给 python，不用手动加引号，也不用记参数。
+# 用法：
+#   ./print.sh                       # 回车后提示输入路径（可直接拖文件进来）
+#   ./print.sh 路径...               # 路径含空格也不用加引号
+DIR="$(cd "$(dirname "$0")" && pwd)"
+
+if [ $# -eq 0 ]; then
+    read -r -p "请输入 PDF 路径（可直接把文件拖进来）： " PDF
+else
+    PDF="$*"
+fi
+
+# 去掉拖进来时可能带的首尾引号/空格
+PDF="$(echo "$PDF" | sed -e "s/^[[:space:]'\"]*//" -e "s/[[:space:]'\"]*\$//")"
+
+if [ -z "$PDF" ]; then
+    echo "未输入文件路径，已退出。" >&2
+    exit 1
+fi
+
+# 关键：这里的 "" 保证含空格的路径作为一个整体传进去
+python3 "$DIR/duplex_print.py" "$PDF"

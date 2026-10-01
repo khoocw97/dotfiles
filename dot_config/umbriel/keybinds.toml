@@ -6,10 +6,9 @@
 "Mod+G" = "spawn:flatpak run com.google.Chrome"
 "Mod+O" = "spawn:flatpak run com.obsproject.Studio"
 "Mod+N" = "spawn:flatpak run org.gnome.TextEditor"
-"Mod+P" = "spawn:kitty --class PrintTerminal -- ~/.local/bin/print_pdf.sh"
+"Mod+P" = "spawn:kitty --class PrintTerminal -- ~/.local/share/print-script/print"
 "Mod+F1" = "spawn:~/.local/bin/sbz-toggle-headphone.sh"
 "Mod+Space" = "spawn:fuzzel"
-
 
 # noctalia setting
 # "Mod+Space" = "spawn:noctalia msg panel-toggle launcher"
@@ -128,4 +127,3 @@
 "Mod+Ctrl+7" = "window-move-to-workspace:7"
 "Mod+Ctrl+8" = "window-move-to-workspace:8"
 "Mod+Ctrl+9" = "window-move-to-workspace:9"
-
