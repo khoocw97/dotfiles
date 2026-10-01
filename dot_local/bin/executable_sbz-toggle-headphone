@@ -21,7 +21,6 @@ if [[ $(pactl get-default-sink) == *analog* ]]; then
     notify-send --app-name="模式" "耳机-纯净" --icon=audio-headphones
 else
     # 光纤/其他 -> 音箱 (复用 startup 脚本)
-    ~/.local/bin/sbz-speaker.sh
+    ~/.local/bin/sbz-speaker
     notify-send --app-name="模式" "音箱-音效" --icon=audio-speakers
 fi
-

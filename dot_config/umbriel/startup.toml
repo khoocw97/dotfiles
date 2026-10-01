@@ -4,7 +4,7 @@
 autostart = [
     "noctalia",
     "fcitx5 -d",
-    "$HOME/.local/bin/msige602pl-fix-audio" ## for laptop
+    ##"$HOME/.local/bin/msige602pl-fix-audio", ## for laptop
     "mega-cmd-server --do-not-log-to-stdout",
     "sunshine",
     "$HOME/AppImages/beeper.appimage",
