@@ -5,10 +5,11 @@ spawn-sh-at-startup "[ -f ~/.config/user-dirs.dirs ] || xdg-user-dirs-update" //
 spawn-sh-at-startup "~/.local/bin/sbz-speaker" // for desktop
 
 // Personal Startup
-spawn-at-startup "sunshine"
+// spawn-at-startup "sunshine"
 // spawn-sh-at-startup "~/.local/bin/msige602pl-fix-audio" // for laptop
 // spawn-at-startup "~/AppImages/beeper.appimage"
 
 // Personal Workspaces
 workspace "main"
 workspace "steam"
+workspace "obs"

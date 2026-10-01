@@ -7,7 +7,7 @@ binds {
     Mod+G hotkey-overlay-title="Helium Browser" { spawn "helium"; }
     Mod+N hotkey-overlay-title="Text-Editor" { spawn "flatpak" "run" "org.gnome.TextEditor"; }
     Mod+O hotkey-overlay-title="OBS-Studio" { spawn "flatpak" "run" "com.obsproject.Studio"; }
-    Mod+P hotkey-overlay-title="Print Script" { spawn "kitty" "--class" "PrintTerminal" "--" "~/.local/share/print-script/print"; }
+    Mod+P hotkey-overlay-title="Print Script" { spawn-sh "kitty --class PrintTerminal -- ~/.local/share/print-script/print"; }
     Mod+F1 hotkey-overlay-title="Toggle Headphone/Speaker" { spawn-sh "~/.local/bin/sbz-toggle-headphone"; }
     Mod+Space hotkey-overlay-title="Application Launcher:fuzzel" { spawn "fuzzel"; }
     // --------------------------------------------------------------
