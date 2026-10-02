@@ -2,9 +2,9 @@
 # Personal
 "Mod+E" = "spawn:kitty -e yazi"
 "Mod+Return" = "spawn:kitty"
-"Mod+B" = "spawn:flatpak run org.mozilla.firefox"
-"Mod+G" = "spawn:flatpak run com.google.Chrome"
-"Mod+O" = "spawn:flatpak run com.obsproject.Studio"
+"Mod+B" = "spawn:flatpak run org.mozilla.firefox || firefox"
+"Mod+G" = "spawn:flatpak run com.google.Chrome || google-chrome-stable"
+"Mod+O" = "spawn:flatpak run com.obsproject.Studio || obs"
 "Mod+N" = "spawn:zed"
 "Mod+P" = "spawn:kitty --class PrintTerminal -- ~/.local/share/print-script/print"
 "Mod+F1" = "spawn:~/.local/bin/sbz-toggle-headphone"
