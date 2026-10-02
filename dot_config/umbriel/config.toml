@@ -18,6 +18,9 @@ honor_restored_maximize = false # let apps restore their saved maximized state
 
 [environment]
 # GTK_THEME = "Adwaita:dark"
+# for xwayland & x11 ([input.cursor] only affects wayland,同 niri cursor.kdl 注释)
+XCURSOR_THEME = "Bibata-Modern-Ice"
+XCURSOR_SIZE = "24"
 QT_QPA_PLATFORMTHEME = "qt5ct"
 ELECTRON_OZONE_PLATFORM_HINT = "wayland"
 GDK_BACKEND = "wayland,x11"
@@ -130,7 +133,7 @@ left_handed = true # flip 180°
 
 
 [input.cursor]
-theme = ""
+theme = "Bibata-Modern-Ice"
 size = 24                      # 1-512
 hardware_cursor = true         # false forces software cursor composition
 hide_when_typing = false       # hide after a non-modifier key press
