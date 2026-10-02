@@ -38,7 +38,7 @@
 | niri | `colour.kdl` 分发 `.chezmoitemplates/niri/<value>.kdl`（单 `layout` 块，中性值各片段自带） | 1 行 |
 | bat | 自带主题双份 `themes/<value>.tmTheme` + `config` 里 `--theme=` 一行；增量主题后必跑 `bat cache --build`（已进 Makefile） | 1 行 |
 | fuzzel | `fuzzel.ini` 分发 `.chezmoitemplates/fuzzel/<value>.ini`（只含 `[colors]`，RGBA 无 `#` 小写，`border` 跟 niri focus-ring；主文件另带 `font` + `[border]`，字体同 kitty，`width=5`/`radius=0`） | 1+2 行 |
-| noctalia | 自带 palette 双份 `palettes/<value>.json`（只写 `dark`，`light` 缺省回落 dark），`setting.toml` 里 `source = "custom"` + `custom_palette = "{{ .theme }}"`；`builtin_ids` 只留 gtk3/gtk4/qt 给 GTK/Qt 用，`community_ids` 保持空；kitty/niri/yazi/fcitx5/starship 一律不管（noctalia 再生成它们的文件就是打架） | 1 行 |
+| noctalia | 自带 palette 双份 `palettes/<value>.json`（只写 `dark`，`light` 缺省回落 dark），`setting.toml` 里 `source = "custom"` + `custom_palette = "{{ .theme }}"`；`[shell]` 固定 `app_icon_color = "on_surface_variant"` + `app_icon_colorize = true`（角色名引用，自动跟主题，静态行不算模板）；`builtin_ids` 只留 gtk3/gtk4/qt 给 GTK/Qt 用，`community_ids` 保持空；kitty/niri/yazi/fcitx5/starship 一律不管（noctalia 再生成它们的文件就是打架） | 1 行 |
 
 原则：软件原生支持多主题用原生的（starship palettes）；没有才用 chezmoi 分发。
 fcitx5 主题禁止 SVG/透明色（出过生产事故：`fill-opacity < 1` 导致整框发虚），纯色优先。
@@ -65,7 +65,7 @@ surface `#f5edca` / fg `#4f3829` / blue `#45707a` / panel `#f3eac7` / bg3 `#f2e5
 time_bg `#f3eac7` / os_bg `#654735` / os_fg `#f9f5d7` /
 red `#c14a4a` / orange `#c35e0a` / yellow `#b47109` / green `#6c782e` /
 aqua `#4c7a5d` / purple `#945e80` / grey `#928374`
-（kitty `background` 单独用 light-medium bg0 `#fbf1c7`；umbriel `unfocused` 双 gruvbox 用透明（`#1d202100` / `#f9f5d700`）；
+（kitty `background` 三主题用 `#1a1b26` / `#1d2021` / light-medium bg0 `#fbf1c7`，noctalia `mSurface`（顶栏）跟 kitty `background` 走、不跟上面 surface；umbriel `unfocused` 双 gruvbox 用透明（`#1d202100` / `#f9f5d700`）；
 os_bg 不用 yellow：`#b47109` 配深/浅字分别是 2.75/3.59，均 < 4.5，改用 fg0 `#654735` 配 `#f9f5d7` 得 7.61；
 noctalia `mPrimary` 同理用 blue `#45707a` 配 `#f9f5d7` 得 4.95，`mSecondary` 用 aqua 4.49 / `mError` 用 red 4.39 系上游浅色极限，已注明）
 
