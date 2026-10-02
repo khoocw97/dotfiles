@@ -4,7 +4,7 @@
 
 ## 1. 唯一开关
 
-- 变量 `theme`，合法值只有两个：`tokyonight`（默认）、`gruvbox-dark`。
+- 变量 `theme`，合法值只有三个：`tokyonight`（默认）、`gruvbox-dark`、`gruvbox-light`。
 - 存放：`~/.config/chezmoi/chezmoi.toml` 的 `[data] theme`；默认值在 `.chezmoi.toml.tmpl`。
 - 切换：`make <theme>`（如 `make gruvbox-dark`），初装 `make install`，重置 `make reset`（= `make tokyonight`）。临时的单次覆盖用
   `chezmoi <cmd> --override-data '{"theme":"gruvbox-dark"}'`（不持久化）。
@@ -60,6 +60,15 @@ time_bg `#141617` / os_bg `#d8a657` / os_fg `#1d2021` /
 red `#ea6962` / orange `#e78a4e` / yellow `#d8a657` / green `#a9b665` /
 aqua `#89b482` / purple `#d3869b` / grey `#928374`
 
+gruvbox-light（gruvbox-material, light + background=hard + foreground=material）：
+surface `#f5edca` / fg `#4f3829` / blue `#45707a` / panel `#f3eac7` / bg3 `#f2e5bc` /
+time_bg `#f3eac7` / os_bg `#654735` / os_fg `#f9f5d7` /
+red `#c14a4a` / orange `#c35e0a` / yellow `#b47109` / green `#6c782e` /
+aqua `#4c7a5d` / purple `#945e80` / grey `#928374`
+（kitty `background` 单独用 light-medium bg0 `#fbf1c7`；umbriel `unfocused` 双 gruvbox 用透明（`#1d202100` / `#f9f5d700`）；
+os_bg 不用 yellow：`#b47109` 配深/浅字分别是 2.75/3.59，均 < 4.5，改用 fg0 `#654735` 配 `#f9f5d7` 得 7.61；
+noctalia `mPrimary` 同理用 blue `#45707a` 配 `#f9f5d7` 得 4.95，`mSecondary` 用 aqua 4.49 / `mError` 用 red 4.39 系上游浅色极限，已注明）
+
 ## 5. 机器分流
 
 `.chezmoiignore` 按 `XDG_CURRENT_DESKTOP`（=`env "XDG_CURRENT_DESKTOP"|lower`）ignore 整目录：
@@ -69,7 +78,7 @@ aqua `#89b482` / purple `#d3869b` / grey `#928374`
 
 ## 6. 验证铁律
 
-- 改模板必跑双主题 `chezmoi cat` 渲染 + TOML/语法校验；starship 改完必跑
+- 改模板必跑全主题 `chezmoi cat` 渲染 + TOML/语法校验；starship 改完必跑
   `STARSHIP_CONFIG=<render> starship prompt` 真加载。
 - 纯重构（拆文件、改名）必须重构前后渲染 `diff` 为空（注释行改写除外）。
 - 对比度：彩底上的字至少 4.5:1，算完再提交（`python3` 现算）。

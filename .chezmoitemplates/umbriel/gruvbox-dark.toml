@@ -12,7 +12,7 @@ backdrop = "#32302fFF"
 
 [colors.border]
 focused = "#d8a657FF"
-unfocused = "#1d2021FF"
+unfocused = "#1d202100"
 outer = "#1d2021FF"
 
 [colors.overview]

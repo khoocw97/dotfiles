@@ -1,0 +1,21 @@
+# gruvbox-light
+[colors]
+background = "#f3eac7FF"
+text_primary = "#4f3829FF"
+text_muted = "#4f3829FF"
+accent_primary = "#b47109FF"
+accent_secondary = "#45707aFF"
+warning = "#c35e0aFF"
+error = "#c14a4aFF"
+insert_hint = "#b4710980"
+backdrop = "#f3eac7FF"
+
+[colors.border]
+focused = "#b47109FF"
+unfocused = "#f9f5d700"
+outer = "#f9f5d7FF"
+
+[colors.overview]
+background_tint = "#f9f5d788"
+badge = "#b47109FF"
+workspace_background = "#f5edcaFF"

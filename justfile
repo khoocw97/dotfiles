@@ -23,6 +23,9 @@ reset: (_apply-theme "tokyonight")
 gruvbox-dark: (_apply-theme "gruvbox-dark")
 
 [group('theme')]
+gruvbox-light: (_apply-theme "gruvbox-light")
+
+[group('theme')]
 tokyonight: (_apply-theme "tokyonight")
 
 _apply-theme theme:

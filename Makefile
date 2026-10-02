@@ -2,7 +2,7 @@ CONFIG := $(HOME)/.config/chezmoi/chezmoi.toml
 # 与 .chezmoi.toml.tmpl 的 sourceDir 保持一致
 SOURCE := $(HOME)/Project/dotfiles
 REPO   := https://github.com/khoocw97/dotfiles.git
-THEMES := gruvbox-dark tokyonight
+THEMES := gruvbox-dark gruvbox-light tokyonight
 
 .PHONY: help install reset $(THEMES)
 
