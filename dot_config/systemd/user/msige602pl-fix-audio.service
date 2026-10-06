@@ -1,0 +1,12 @@
+[Unit]
+Description=MSI GE60 2PL fix audio after Umbriel starts
+After=umbriel.service
+PartOf=umbriel.service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/msige602pl-fix-audio
+RemainAfterExit=yes
+
+[Install]
+WantedBy=umbriel.service

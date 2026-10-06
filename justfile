@@ -19,6 +19,14 @@ install:
 [group('command')]
 reset: (_apply-theme "tokyonight")
 
+# install audio-fix service and enable it (MSI)
+[group('command')]
+fix-audio-msi:
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/msige602pl-fix-audio.service" "$HOME/.config/systemd/user/msige602pl-fix-audio.service"
+    @systemctl --user daemon-reload
+    @systemctl --user enable --now msige602pl-fix-audio.service
+    @echo Done
+
 [group('theme')]
 gruvbox-dark: (_apply-theme "gruvbox-dark")
 

@@ -4,7 +4,7 @@ SOURCE := $(HOME)/Project/dotfiles
 REPO   := https://github.com/khoocw97/dotfiles.git
 THEMES := gruvbox-dark gruvbox-light tokyonight
 
-.PHONY: help install reset $(THEMES)
+.PHONY: help install reset fix-audio-msi $(THEMES)
 
 help:
 	@echo ""
@@ -22,6 +22,12 @@ install: ## chezmoi init (clone repo if missing), default tokyonight
 	chezmoi -S "$(SOURCE)" apply --init
 
 reset: tokyonight ## 重置到默认主题（= make tokyonight）
+
+fix-audio-msi: ## 安装音频修复 service 并启用 (MSI)
+	@install -D -m 644 "$(SOURCE)/dot_config/systemd/user/msige602pl-fix-audio.service" "$(HOME)/.config/systemd/user/msige602pl-fix-audio.service"
+	@systemctl --user daemon-reload
+	@systemctl --user enable --now msige602pl-fix-audio.service
+	@echo Done
 
 define apply-theme
 	@test "$$(grep -c '^theme = ' $(CONFIG) 2>/dev/null)" = 1 || \

@@ -8,6 +8,9 @@
 .config/umbriel/**
 {{- end }}
 
+# make/just fix-audio-msi - manual install
+.config/systemd/user/msige602pl-fix-audio.service
+
 Makefile
 justfile
 README.md
