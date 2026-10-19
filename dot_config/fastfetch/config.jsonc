@@ -1,0 +1,110 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+      "logo": {
+        "source": "~/.config/fastfetch/qiqi.png",
+        "type": "auto",
+        "color": {
+            "1": "#ff5c00"
+        },
+        "padding": {
+            "top":  4,
+            "right": 4,
+            "left": 4,
+            "bottom": 4
+        }
+    },
+    "display": {
+        "separator": "  ➤ "
+    },
+    "modules": [
+         "break",
+        {
+            "type": "title",
+            "key": " ",
+            "color": {
+                "user": "light_blue",
+                "at": "white",
+                "host": "magenta"
+            }
+        },
+        {
+            "type": "os",
+            "key": " ",
+            "format": "{pretty-name}"
+        },
+        {
+            "type": "kernel",
+            "key": " ",
+            "format": "{1} {2}"
+        },
+        {
+            "type": "uptime",
+            "key": " 󰅐"
+        },
+        "break",
+        {
+            "type": "host",
+            "key": " 󰾰"
+        },
+        {
+            "type": "display",
+            "key": " 󰍹"
+        },
+        {
+            "type": "cpu",
+            "key": " 󰻠"
+        },
+        {
+            "type": "gpu",
+            "key": " "
+        },
+        {
+            "type": "memory",
+            "key": " 󰍛"
+        },
+        {
+            "type": "disk",
+            "key": " ",
+            "hideFS": "overlay"
+        },
+        {
+            "type": "battery",
+            "key": " "
+        },
+        {
+            "type": "gamepad",
+            "key": " 󰖺"
+        },
+        "break",
+        {
+            "type": "de",
+            "key": " 󰕮"
+        },
+        {
+            "type": "wm",
+            "key": " "
+        },
+        {
+            "type": "shell",
+            "key": " "
+        },
+        {
+            "type": "terminal",
+            "key": " "
+        },
+        {
+            "type": "localip",
+            "key": " 󰩠"
+        },
+        {
+            "type": "packages",
+            "key": " 󰏖"
+        },
+        "break",
+        {
+            "type": "colors",
+            "paddingLeft": 1,
+            "symbol": "circle"
+        }
+    ]
+}
