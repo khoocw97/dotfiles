@@ -1,0 +1,18 @@
+input {
+    keyboard {
+        xkb
+        numlock
+    }
+    touchpad {
+        tap
+        natural-scroll
+        // disabled-on-external-mouse
+    }
+    mouse {
+        // natural-scroll
+        // accel-speed 0.2
+    }
+    focus-follows-mouse max-scroll-amount="0%"
+    // Disable niri take over power button
+    disable-power-key-handling
+}

@@ -1,75 +1,11 @@
-prefer-no-csd
-
-gestures {
-    hot-corners {
-        off
-    }
-}
-
-hotkey-overlay {
-    skip-at-startup
-    hide-not-bound
-}
-
-environment {
-    XDG_CURRENT_DESKTOP "niri"
-    XDG_SESSION_TYPE "wayland"
-    // for xwayland & x11 (cursor.kdl only affects wayland)
-    XCURSOR_THEME "Bibata-Modern-Ice"
-    XCURSOR_SIZE "24"
-    GTK_IM_MODULE ""
-    ELECTRON_OZONE_PLATFORM_HINT "auto"
-    QT_QPA_PLATFORM "wayland"
-    QT_QPA_PLATFORMTHEME "qt6ct"
-    QT_QUICK_CONTROLS_STYLE "org.kde.desktop"
-    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
-}
-
-input {
-    keyboard {
-        xkb
-        numlock
-    }
-    touchpad {
-        tap
-        natural-scroll
-        // disabled-on-external-mouse
-    }
-    mouse {
-        // natural-scroll
-        // accel-speed 0.2
-    }
-    focus-follows-mouse max-scroll-amount="0%"
-    // Disable niri take over power button
-    disable-power-key-handling
-}
-
-screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
-
-recent-windows {
-    binds {
-        // Pre-select the "Output" scope when switching windows.
-        Alt+Tab         { next-window scope="output"; }
-        Alt+Shift+Tab   { previous-window scope="output"; }
-        // filter with app-id (pre-seletct next app with same id)
-        Alt+grave       { next-window filter="app-id"; }
-        Alt+Shift+grave { previous-window filter="app-id"; }
-    }
-}
-
-
-debug {
-  // Allows notification actions and window activation from Noctalia.
-  honor-xdg-activation-with-invalid-serial
-}
-
 // settings files
-include "startup.kdl"
-include "colour.kdl"
-include "layout.kdl"
-include "animations.kdl"
-include "outputs.kdl"
-include "cursor.kdl"
-include "windowrules.kdl"
-include "binds.kdl"
-
+include "./cfg/animations.kdl"
+include "./cfg/autostart.kdl"
+include "./cfg/keybinds.kdl"
+include "./cfg/input.kdl"
+include "./cfg/outputs.kdl"
+include "./cfg/colour.kdl"
+include "./cfg/layout.kdl"
+include "./cfg/rules.kdl"
+include "./cfg/cursor.kdl"
+include "./cfg/misc.kdl"

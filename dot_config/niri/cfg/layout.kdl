@@ -1,11 +1,3 @@
-// 全局
-window-rule {
-    geometry-corner-radius 0
-    clip-to-geometry false
-    tiled-state true
-    draw-border-with-background false
-}
-//
 layout {
     gaps 10
     background-color "transparent"

@@ -44,7 +44,7 @@ binds {
     // --------------------------------------------------------------
 
     // System Setting
-    Mod+Shift+Slash { spawn-sh "python3 /usr/share/niri-config/niri_parse_keybinds.py -i ~/.config/niri/binds.kdl | fuzzel -d -w 100 -f monospace --match-mode exact"; }
+    Mod+Shift+Slash { spawn-sh "python3 ~/.config/niri/cfg/niri_parse_keybinds.py -i ~/.config/niri/cfg/keybinds.kdl | fuzzel -d -w 100 -f monospace --match-mode exact"; }
     Mod+Shift+P { power-off-monitors; }
     XF86PowerOff { spawn "systemctl" "poweroff"; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
@@ -143,4 +143,15 @@ binds {
     Mod+Print { screenshot-screen; }
     // Active Window
     Alt+Print { screenshot-window; }
+}
+
+recent-windows {
+    binds {
+        // Pre-select the "Output" scope when switching windows.
+        Alt+Tab         { next-window scope="output"; }
+        Alt+Shift+Tab   { previous-window scope="output"; }
+        // filter with app-id (pre-seletct next app with same id)
+        Alt+grave       { next-window filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+    }
 }
