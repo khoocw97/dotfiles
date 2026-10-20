@@ -12,11 +12,33 @@ header() {
 
 pause() {
     echo "------------------------------"
-    read -rp "按回车键返回主菜单..."
+    read_input "按回车键返回主菜单..." _
 }
 
 is_quit() {
     [[ -z "$1" || "$1" == [Qq] ]]
+}
+
+read_input() {
+    read -e -rp "$1" "$2" || exit 0
+}
+
+# 列出同步任务(MEGAcmd 2.6.0):
+# - 重试最多 3 次:服务器忙时可能只回日志不出表格
+# - 过滤"Invalid utf8"ERR 噪声行:来自遥测上报(megacmd.cpp
+#   mayExecutePendingStuffInWorkerThread),走 stdout 无法按流分离,只能按内容匹配
+#   (治本在服务器侧:startup.toml 里 env MEGACMD_DISABLE_UTF8_VALIDATIONS=1)
+# - --client-width 放宽到 200:否则 REMOTEPATH 按终端宽度截断
+show_syncs() {
+    local attempt out
+    for attempt in 1 2 3; do
+        out=$(mega-sync --client-width=200 2>/dev/null)
+        if [[ "$out" == *LOCALPATH* ]]; then
+            break
+        fi
+        sleep 1
+    done
+    printf '%s\n' "$out" | grep -v 'Invalid utf8 accumulated occurrences'
 }
 
 # 检查 MEGAcmd 是否安装
@@ -45,14 +67,14 @@ fi
     echo " 5. 断开同步任务"
     echo " 6. 退出程序"
     echo "=========================================="
-    read -rp "请输入选项数字(1-6): " choice
+    read_input "请输入选项数字(1-6): " choice
 
     case $choice in
-    
+
         1)
             echo ""
             echo "--- 登录 MEGA 账号 ---"
-            read -rp "请输入 Email 邮箱: " email
+            read_input "请输入 Email 邮箱: " email
             read -s -rp "请输入密码 (输入时屏幕不显示): " password
             echo ""
             echo "正在登录中，请稍候..."
@@ -67,36 +89,39 @@ fi
             ;;
         3)
             echo "--- 已有同步 ---"
-            mega-sync
+            show_syncs
+            echo ""
+            echo "--- 同步问题 (sync-issues, 上游 2.6 新增) ---"
+            mega-sync-issues
             pause
             ;;
         4)
             echo "--- 已有同步 ---"
-            mega-sync
+            show_syncs
             echo "--- 建立实时同步 (输入 q 返回主菜单) ---"
-            read -rp "请输入本地文件夹路径 (例如 ~/Documents): " local_path
+            read_input "请输入本地文件夹路径 (例如 ~/Documents): " local_path
             # 检查是否输入了 q
             if is_quit "$local_path"; then
                 continue
             fi
-            
+
             echo "--- 云端目录 ---"
             mega-ls /
-            
-            read -rp "请输入云端文件夹路径 (例如 /Backup): " remote_path
+
+            read_input "请输入云端文件夹路径 (例如 /Backup): " remote_path
             # 检查是否输入了 q
             if is_quit "$remote_path"; then
                 continue
             fi
-            
+
             local_path="${local_path/#\~/$HOME}"
-            
+
             # 自动创建机制：路径不存在时自动创建
             if ! mkdir -p "$local_path"; then
                 echo "错误: 自动创建文件夹失败，请检查权限！"
                 continue
             fi
-            
+
             echo "正在建立同步对..."
             mega-sync "$local_path" "$remote_path"
             pause
@@ -104,15 +129,15 @@ fi
         5)
             echo ""
             echo "--- 当前正在运行的同步任务 ---"
-            mega-sync 
+            show_syncs
             echo "----------------------------------------"
             echo "提示: 输入 q 可取消并返回主菜单"
-            read -rp "请输入你想断开的【同步 ID】或【本地路径】: " sync_target
+            read_input "请输入你想断开的【同步 ID】或【本地路径】: " sync_target
             # 检查是否输入了 q
             if is_quit "$sync_target"; then
                 continue
             fi
-            
+
             mega-sync -d "$sync_target"
             pause
             ;;
