@@ -29,9 +29,6 @@ workspace_curve = "spring:1,1000"
 enabled = false
 dim = 0.5             # 0.0-1.0
 blur = false          # requires appearance.blur.enabled
-scale = 0.0           # 0 preserves geometry; 0.1-1.0 sizes and centers on entry
-maximize = false      # maximize to edges on entry
-fullscreen = false    # fullscreen on entry
 
 [animation.border]
 enabled = false
