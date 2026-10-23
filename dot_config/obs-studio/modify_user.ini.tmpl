@@ -1,0 +1,28 @@
+#!/usr/bin/env python3
+import sys
+
+managed = (("FontScale", "12"), ("Density", "-5"),
+           ("Theme", '{{ get . "theme" | default "tokyonight" }}'))
+lines = sys.stdin.read().splitlines()
+
+start = next((i for i, l in enumerate(lines) if l.strip() == "[Appearance]"), None)
+if start is None:
+    if lines and lines[-1].strip():
+        lines.append("")
+    lines.append("[Appearance]")
+    body, end = [], len(lines)
+else:
+    end = next((j for j in range(start + 1, len(lines))
+                if lines[j].strip().startswith("[") and lines[j].strip().endswith("]")), len(lines))
+    body = lines[start + 1:end]
+
+for key, value in managed:
+    hits = [i for i, l in enumerate(body) if l.split("=", 1)[0].strip() == key]
+    body = [l for i, l in enumerate(body) if i not in hits]
+    body.insert(hits[0] if hits else len(body), f"{key}={value}")
+
+if start is None:
+    lines += body
+else:
+    lines[start + 1:end] = body
+print("\n".join(lines))

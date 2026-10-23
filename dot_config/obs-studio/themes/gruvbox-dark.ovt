@@ -1,0 +1,91 @@
+@OBSThemeMeta {
+    name: 'Gruvbox Dark';
+    id: 'gruvbox-dark';
+    extends: 'com.obsproject.Yami.Original';
+    author: 'weng';
+    dark: 'true';
+}
+
+@OBSThemeVars {
+    /* surfaces */
+    --grey1: #928374;
+    --grey2: #7a6e63;
+    --grey3: #4a443f;
+    --grey4: #3c3836;
+    --grey5: #32302f;
+    --grey6: #282828;
+    --grey7: #1d2021;
+    --grey8: #141617;
+
+    /* text */
+    --white1: #ddc7a1;
+    --white2: #cbb68f;
+    --white3: #b9a67f;
+    --white4: #b3a184;
+    --white5: #a89984;
+
+    --black1: #141617;
+    --black2: #1d2021;
+    --black3: #282828;
+    --black4: #32302f;
+    --black5: #3c3836;
+
+    /* accent scales: 1-2 tint, 3 base, 4-6 shade */
+    --red1: #e58a78;
+    --red2: #e8776b;
+    --red3: #ea6962;
+    --red4: #b75752;
+    --red5: #8e4845;
+    --red6: #653a38;
+
+    --green1: #bbbc7a;
+    --green2: #b1b96e;
+    --green3: #a9b665;
+    --green4: #869054;
+    --green5: #6a7246;
+    --green6: #4e5439;
+
+    --yellow1: #dab271;
+    --yellow2: #d9ab62;
+    --yellow3: #d8a657;
+    --yellow4: #a9844a;
+    --yellow5: #846a3f;
+    --yellow6: #5e4f34;
+
+    --purple1: #d69d9d;
+    --purple2: #d4909c;
+    --purple3: #d3869b;
+    --purple4: #a66c7c;
+    --purple5: #815864;
+    --purple6: #5d444c;
+
+    --cyan1: #a6bb8d;
+    --cyan2: #96b787;
+    --cyan3: #89b482;
+    --cyan4: #6e8f6a;
+    --cyan5: #587156;
+    --cyan6: #435443;
+
+    --orange1: #e49f6b;
+    --orange2: #e6935a;
+    --orange3: #e78a4e;
+    --orange4: #b47043;
+    --orange5: #8c5a3a;
+    --orange6: #644531;
+
+    --blue1: #9fb7a2;
+    --blue2: #345a50;
+    --blue3: #35574e;
+    --blue4: #304c45;
+    --blue5: #2b413c;
+    --blue6: #273633;
+
+    /* semantic overrides */
+    --primary: var(--blue3);
+    --primary_light: var(--blue2);
+    --primary_lighter: var(--blue1);
+    --primary_dark: var(--blue4);
+    --primary_darker: var(--blue5);
+    --palette_link: var(--blue1);
+    --palette_linkVisited: var(--blue1);
+}
