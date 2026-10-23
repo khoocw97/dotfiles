@@ -1,6 +1,0 @@
-[Default Applications]
-text/plain=dev.zed.Zed.desktop
-image/jpeg=swayimg.desktop
-image/png=swayimg.desktop
-text/markdown=dev.zed.Zed.desktop
-application/x-shellscript=dev.zed.Zed.desktop

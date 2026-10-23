@@ -1,0 +1,11 @@
+[Default Applications]
+text/plain=dev.zed.Zed.desktop
+image/jpeg=swayimg.desktop
+image/png=swayimg.desktop
+text/markdown=dev.zed.Zed.desktop
+application/x-shellscript=dev.zed.Zed.desktop
+text/html=org.mozilla.firefox
+x-scheme-handler/http=org.mozilla.firefox
+x-scheme-handler/https=org.mozilla.firefox
+x-scheme-handler/about=org.mozilla.firefox
+x-scheme-handler/unknown=org.mozilla.firefox
