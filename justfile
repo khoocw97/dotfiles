@@ -14,6 +14,7 @@ default:
 install:
     @[ -d "{{SOURCE}}/.git" ] || git clone "{{REPO}}" "{{SOURCE}}"
     @chezmoi -S "{{SOURCE}}" apply --init
+    @just firefox
 
 # reset to tokyonight
 [group('command')]
@@ -26,6 +27,31 @@ fix-audio-msi:
     @systemctl --user daemon-reload
     @systemctl --user enable --now msige602pl-fix-audio.service
     @echo Done
+
+# install firefox - no rounded
+[group('command')]
+firefox:
+    #!/usr/bin/env bash
+    src="$HOME/.config/mozilla/firefox/theme"
+    [ -d "$src" ] || { echo "主题目录不存在: $src，跳过"; exit 0; }
+    found=0
+    for base in \
+        "$HOME/.var/app/org.mozilla.firefox/config/mozilla/firefox" \
+        "$HOME/.config/mozilla/firefox"; do
+        if [ ! -d "$base" ]; then
+            echo "未检测到: $base，跳过"
+            continue
+        fi
+        hit=0
+        for profile in "$base"/*.default-release; do
+            [ -d "$profile" ] || continue
+            hit=1; found=1
+            cp -a "$src"/. "$profile"/
+            echo "Firefox theme: $src -> $profile"
+        done
+        [ "$hit" = 1 ] || echo "$base 下无 *.default-release，跳过"
+    done
+    [ "$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
 
 [group('theme')]
 gruvbox-dark: (_apply-theme "gruvbox-dark")

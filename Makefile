@@ -4,7 +4,7 @@ SOURCE := $(HOME)/Project/dotfiles
 REPO   := https://github.com/khoocw97/dotfiles.git
 THEMES := gruvbox-dark gruvbox-light tokyonight
 
-.PHONY: help install reset fix-audio-msi $(THEMES)
+.PHONY: help install reset fix-audio-msi firefox $(THEMES)
 
 help:
 	@echo ""
@@ -20,6 +20,7 @@ help:
 install: ## chezmoi init (clone repo if missing), default tokyonight
 	@ [ -d "$(SOURCE)/.git" ] || git clone "$(REPO)" "$(SOURCE)"
 	chezmoi -S "$(SOURCE)" apply --init
+	@$(MAKE) --no-print-directory firefox
 
 reset: tokyonight ## 重置到默认主题（= make tokyonight）
 
@@ -28,6 +29,28 @@ fix-audio-msi: ## 安装音频修复 service 并启用 (MSI)
 	@systemctl --user daemon-reload
 	@systemctl --user enable --now msige602pl-fix-audio.service
 	@echo Done
+
+firefox: ## 安装 firefox - no rounded
+	@src="$$HOME/.config/mozilla/firefox/theme"; \
+	[ -d "$$src" ] || { echo "主题目录不存在: $$src，跳过"; exit 0; }; \
+	found=0; \
+	for base in \
+		"$$HOME/.var/app/org.mozilla.firefox/config/mozilla/firefox" \
+		"$$HOME/.config/mozilla/firefox"; do \
+		if [ ! -d "$$base" ]; then \
+			echo "未检测到: $$base，跳过"; \
+			continue; \
+		fi; \
+		hit=0; \
+		for profile in "$$base"/*.default-release; do \
+			[ -d "$$profile" ] || continue; \
+			hit=1; found=1; \
+			cp -a "$$src"/. "$$profile"/; \
+			echo "Firefox theme: $$src -> $$profile"; \
+		done; \
+		[ "$$hit" = 1 ] || echo "$$base 下无 *.default-release，跳过"; \
+	done; \
+	[ "$$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
 
 define apply-theme
 	@test "$$(grep -c '^theme = ' $(CONFIG) 2>/dev/null)" = 1 || \
