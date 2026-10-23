@@ -14,8 +14,8 @@
   <property name="zoomStep" value="10"/>
   <property name="zoomStepScroll" value="2"/>
   <property name="displayDpi" value="-1"/>
-  <property name="mainWndWidth" value="943"/>
-  <property name="mainWndHeight" value="1026"/>
+  <property name="mainWndWidth" value="1265"/>
+  <property name="mainWndHeight" value="1386"/>
   <property name="maximized" value="false"/>
   <property name="showToolbar" value="true"/>
   <property name="showSidebar" value="false"/>
@@ -56,7 +56,7 @@
   <property name="cursorHighlightBorderColor" value="2147483903"/>
   <property name="cursorHighlightRadius" value="30"/>
   <property name="cursorHighlightBorderWidth" value="0"/>
-  <property name="useStockIcons" value="true"/>
+  <property name="useStockIcons" value="false"/>
   <property name="disableScrollbarFadeout" value="false"/>
   <property name="disableAudio" value="false"/>
   <!--Hides scroolbars in the main window, allowed values: "none", "horizontal", "vertical", "both"-->
@@ -122,7 +122,7 @@
   <property name="numIgnoredStylusEvents" value="0"/>
   <property name="inputSystemTPCButton" value="false"/>
   <property name="inputSystemDrawOutsideWindow" value="true"/>
-  <property name="preferredLocale" value="zh"/>
+  <property name="preferredLocale" value="zh_CN"/>
   <property name="useSpacesForTab" value="false"/>
   <property name="numberOfSpacesForTab" value="4"/>
   <property name="laserPointerFadeOutTime" value="500"/>
