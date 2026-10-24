@@ -8,8 +8,9 @@
 .config/umbriel/**
 {{- end }}
 
-# make/just fix-audio-msi - manual install
+# make/just manual install
 .config/systemd/user/msige602pl-fix-audio.service
+.config/systemd/user/obs-studio.service
 
 Makefile
 justfile

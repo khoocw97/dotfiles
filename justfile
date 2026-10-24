@@ -53,6 +53,14 @@ firefox:
     done
     [ "$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
 
+# install obs autostart service and enable it (MSI)
+[group('command')]
+obs:
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/obs-studio.service" "$HOME/.config/systemd/user/obs-studio.service"
+    @systemctl --user daemon-reload
+    @systemctl --user enable --now obs-studio.service
+    @echo Done
+
 [group('theme')]
 gruvbox-dark: (_apply-theme "gruvbox-dark")
 
