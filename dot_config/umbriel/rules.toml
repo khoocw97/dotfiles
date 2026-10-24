@@ -67,12 +67,6 @@ default_floating = true
 
 # custom rule
 [[window_rule]]
-match.app_id = "^Beeper$"
-default_workspace = 3
-default_maximize = true
-default_focused = false
-
-[[window_rule]]
 match.app_id = "^com[.]obsproject[.]Studio$"
 default_workspace = 2
 default_focused = false
@@ -91,4 +85,3 @@ match.app_id = "PrintTerminal"
 default_floating = true
 default_floating_size_px = { width = 600, height = 400 }
 default_position = { x = 15, y = 15, anchor = "bottom_right" }
-
