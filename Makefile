@@ -3,6 +3,10 @@ CONFIG := $(HOME)/.config/chezmoi/chezmoi.toml
 SOURCE := $(HOME)/Project/dotfiles
 REPO   := https://github.com/khoocw97/dotfiles.git
 THEMES := gruvbox-dark gruvbox-light tokyonight
+# 无映射则保持当前壁纸
+WALLS_tokyonight    := $(HOME)/Pictures/Wallpapers/wallpaper-96yottea.jpg
+WALLS_gruvbox-light := $(HOME)/Pictures/Wallpapers/The_Backwater.jxl
+WALLS_gruvbox-dark  := $(HOME)/Pictures/Wallpapers/gruvbox_image46.png
 
 .PHONY: help install reset fix-audio-msi obs firefox $(THEMES)
 
@@ -67,6 +71,7 @@ define apply-theme
 	@niri msg action load-config-file >/dev/null 2>&1 || true
 	@umbriel msg config-reload >/dev/null 2>&1 || true
 	@noctalia msg config-reload >/dev/null 2>&1 || true
+	@[ -z "$(WALLS_$(1))" ] || noctalia msg wallpaper-set "$(WALLS_$(1))" >/dev/null 2>&1 || true
 	@bat cache --build >/dev/null 2>&1 || true
 	@echo Done
 endef

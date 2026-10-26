@@ -78,5 +78,13 @@ _apply-theme theme:
     @niri msg action load-config-file >/dev/null 2>&1 || true
     @umbriel msg config-reload >/dev/null 2>&1 || true
     @noctalia msg config-reload >/dev/null 2>&1 || true
+    # 无映射则保持当前壁纸
+    @case "{{theme}}" in \
+        tokyonight) wp="$HOME/Pictures/Wallpapers/wallpaper-96yottea.jpg" ;; \
+        gruvbox-light) wp="$HOME/Pictures/Wallpapers/The_Backwater.jxl" ;; \
+        gruvbox-dark) wp="$HOME/Pictures/Wallpapers/gruvbox_image46.png" ;; \
+        *) wp="" ;; \
+    esac; \
+    [ -z "$wp" ] || noctalia msg wallpaper-set "$wp" >/dev/null 2>&1 || true
     @bat cache --build >/dev/null 2>&1 || true
     @echo Done
