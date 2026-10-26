@@ -9,3 +9,8 @@ x-scheme-handler/http=org.mozilla.firefox
 x-scheme-handler/https=org.mozilla.firefox
 x-scheme-handler/about=org.mozilla.firefox
 x-scheme-handler/unknown=org.mozilla.firefox
+application/pdf=com.github.xournalpp.xournalpp.desktop
+image/jxl=swayimg.desktop
+
+[Added Associations]
+image/jxl=swayimg.desktop;

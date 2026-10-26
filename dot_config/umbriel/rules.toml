@@ -75,7 +75,7 @@ default_maximize = true
 # Put this AFTER the generic OBS rule so the projector overrides it.
 [[window_rule]]
 match.app_id = "^com[.]obsproject[.]Studio$"
-match.title = "^投影"
+match.title = "^(投影|Projector)"
 default_workspace = 1
 default_focused = true
 
@@ -85,3 +85,10 @@ match.app_id = "PrintTerminal"
 default_floating = true
 default_floating_size_px = { width = 600, height = 400 }
 default_position = { x = 15, y = 15, anchor = "bottom_right" }
+
+# ferdium - All in One Chat
+[[window_rule]]
+match.app_id = "^ferdium$"
+default_workspace = 3
+default_focused = false
+default_maximize = true
