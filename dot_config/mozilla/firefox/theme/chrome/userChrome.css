@@ -285,7 +285,12 @@
   border-radius: 0 !important;
 }
 
-#alltabs-button {
+/* 移除按钮(最大化，最小化，关闭) */
+#vertical-spacer,
+#alltabs-button,
+.titlebar-buttonbox-container,
+.titlebar-buttonbox,
+.titlebar-button {
   display: none !important;
 }
 
@@ -371,3 +376,31 @@ toolbarseparator.proton-zap::before {
 * {
   border-radius: 0 !important;
 }
+
+/* 私密浏览指示器换位：官方硬编码在 #nav-bar 尾部。*/
+#nav-bar-customization-target {
+  display: contents;
+}
+#nav-bar > .titlebar-spacer,
+#nav-bar > toolbartabstop {
+  order: 0;
+}
+#back-button { order: 1; }
+#forward-button { order: 2; }
+#home-button { order: 3; }
+#ipprotection-button { order: 4; }
+#nav-bar > .private-browsing-indicator-with-label,
+#nav-bar > .private-browsing-indicator-button { order: 5; }
+#nav-bar > .private-browsing-indicator-button {
+  --toolbarbutton-outline: none !important;
+}
+#reset-pbm-toolbar-button { order: 6; }
+#urlbar-container { order: 7; }
+#vertical-spacer { order: 8; }
+#downloads-button { order: 9; }
+#unified-extensions-button { order: 10; }
+#sidebar-button { order: 11; }
+#alltabs-button { order: 12; }
+#nav-bar > #nav-bar-overflow-button { order: 50; }
+#nav-bar > #PanelUI-button { order: 51; }
+#nav-bar > .content-analysis-indicator { order: 53; }
