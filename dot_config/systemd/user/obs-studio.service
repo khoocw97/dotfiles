@@ -1,12 +1,11 @@
 [Unit]
-Description=Description=OBS Studio - Flatpak after Umbriel starts
-After=umbriel.service
-PartOf=umbriel.service
+Description=OBS Studio - Flatpak after graphical session starts
+After=graphical-session.target
+PartOf=graphical-session.target
 
 [Service]
-Type=oneshot
+Type=simple
 ExecStart=/usr/bin/flatpak run com.obsproject.Studio
-RemainAfterExit=yes
 
 [Install]
-WantedBy=umbriel.service
+WantedBy=graphical-session.target

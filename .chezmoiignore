@@ -9,8 +9,7 @@
 {{- end }}
 
 # make/just manual install
-.config/systemd/user/msige602pl-fix-audio.service
-.config/systemd/user/obs-studio.service
+.config/systemd/user/**
 
 Makefile
 justfile

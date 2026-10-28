@@ -8,7 +8,7 @@ WALLS_tokyonight    := $(HOME)/Pictures/Wallpapers/wallpaper-96yottea.jpg
 WALLS_gruvbox-light := $(HOME)/Pictures/Wallpapers/The_Backwater.jxl
 WALLS_gruvbox-dark  := $(HOME)/Pictures/Wallpapers/gruvbox_image46.png
 
-.PHONY: help install reset fix-audio-msi obs firefox $(THEMES)
+.PHONY: help install reset msi firefox $(THEMES)
 
 help:
 	@echo ""
@@ -28,10 +28,12 @@ install: ## chezmoi init (clone repo if missing), default tokyonight
 
 reset: tokyonight ## 重置到默认主题（= make tokyonight）
 
-fix-audio-msi: ## 安装音频修复 service 并启用 (MSI)
+msi: ## 安装 MSI 服务
 	@install -D -m 644 "$(SOURCE)/dot_config/systemd/user/msige602pl-fix-audio.service" "$(HOME)/.config/systemd/user/msige602pl-fix-audio.service"
+	@install -D -m 644 "$(SOURCE)/dot_config/systemd/user/obs-studio.service" "$(HOME)/.config/systemd/user/obs-studio.service"
+	@install -D -m 644 "$(SOURCE)/dot_config/systemd/user/ferdium.service" "$(HOME)/.config/systemd/user/ferdium.service"
 	@systemctl --user daemon-reload
-	@systemctl --user enable --now msige602pl-fix-audio.service
+	@systemctl --user enable --now msige602pl-fix-audio.service obs-studio.service ferdium.service
 	@echo Done
 
 firefox: ## 安装 firefox - no rounded
@@ -55,12 +57,6 @@ firefox: ## 安装 firefox - no rounded
 		[ "$$hit" = 1 ] || echo "$$base 下无 *.default-release，跳过"; \
 	done; \
 	[ "$$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
-
-obs: ## 安装 obs service 并启用 (MSI)
-	@install -D -m 644 "$(SOURCE)/dot_config/systemd/user/obs-studio.service" "$(HOME)/.config/systemd/user/obs-studio.service"
-	@systemctl --user daemon-reload
-	@systemctl --user enable --now obs-studio.service
-	@echo Done
 
 define apply-theme
 	@test "$$(grep -c '^theme = ' $(CONFIG) 2>/dev/null)" = 1 || \

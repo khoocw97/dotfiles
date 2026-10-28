@@ -20,12 +20,14 @@ install:
 [group('command')]
 reset: (_apply-theme "tokyonight")
 
-# install audio-fix service and enable it (MSI)
+# install MSI services
 [group('command')]
-fix-audio-msi:
+msi:
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/msige602pl-fix-audio.service" "$HOME/.config/systemd/user/msige602pl-fix-audio.service"
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/obs-studio.service" "$HOME/.config/systemd/user/obs-studio.service"
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/ferdium.service" "$HOME/.config/systemd/user/ferdium.service"
     @systemctl --user daemon-reload
-    @systemctl --user enable --now msige602pl-fix-audio.service
+    @systemctl --user enable --now msige602pl-fix-audio.service obs-studio.service ferdium.service
     @echo Done
 
 # install firefox - no rounded
@@ -52,14 +54,6 @@ firefox:
         [ "$hit" = 1 ] || echo "$base 下无 *.default-release，跳过"
     done
     [ "$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
-
-# install obs autostart service and enable it (MSI)
-[group('command')]
-obs:
-    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/obs-studio.service" "$HOME/.config/systemd/user/obs-studio.service"
-    @systemctl --user daemon-reload
-    @systemctl --user enable --now obs-studio.service
-    @echo Done
 
 [group('theme')]
 gruvbox-dark: (_apply-theme "gruvbox-dark")
