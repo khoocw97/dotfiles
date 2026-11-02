@@ -377,30 +377,36 @@ toolbarseparator.proton-zap::before {
   border-radius: 0 !important;
 }
 
-/* 私密浏览指示器换位：官方硬编码在 #nav-bar 尾部。*/
-#nav-bar-customization-target {
-  display: contents;
+/* 私密浏览指示器：官方硬编码在 #nav-bar 尾部（skipintoolbarset，仅私密窗口显示）。
+   换位到 urlbar 侧的尝试全部撤除：display:contents 拍平实测破坏 downloads 面板
+   锚定；跨容器语义其它纯 CSS 手段亦无干净解 —— 定案留在栏尾（order 52 = 官方位）。
+   保留项：去官方特设紫圈，样式与普通按钮一致 */
+#nav-bar > .private-browsing-indicator-with-label,
+#nav-bar > .private-browsing-indicator-button,
+#nav-bar > .content-analysis-indicator {
+  order: 52;
 }
+#nav-bar > .private-browsing-indicator-button {
+  --toolbarbutton-outline: none !important;
+}
+/* 其余栏目级次序:正常栏尾组（仅在与 target 内 order 配合时生效，安全区间） */
 #nav-bar > .titlebar-spacer,
-#nav-bar > toolbartabstop {
+#nav-bar > toolbartabstop,
+#nav-bar > #nav-bar-customization-target {
   order: 0;
 }
+#nav-bar > #nav-bar-overflow-button { order: 51; }
+#nav-bar > #PanelUI-button { order: 53; }
+
+/* target 内排列：与 prefs 里的 placements 一致的双保险（不跨容器，安全） */
 #back-button { order: 1; }
 #forward-button { order: 2; }
 #home-button { order: 3; }
 #ipprotection-button { order: 4; }
-#nav-bar > .private-browsing-indicator-with-label,
-#nav-bar > .private-browsing-indicator-button { order: 5; }
-#nav-bar > .private-browsing-indicator-button {
-  --toolbarbutton-outline: none !important;
-}
-#reset-pbm-toolbar-button { order: 6; }
+#reset-pbm-toolbar-button { order: 13; } /* 栏尾最末,右侧紧邻私密提示器 */
 #urlbar-container { order: 7; }
 #vertical-spacer { order: 8; }
 #downloads-button { order: 9; }
 #unified-extensions-button { order: 10; }
 #sidebar-button { order: 11; }
 #alltabs-button { order: 12; }
-#nav-bar > #nav-bar-overflow-button { order: 50; }
-#nav-bar > #PanelUI-button { order: 51; }
-#nav-bar > .content-analysis-indicator { order: 53; }
