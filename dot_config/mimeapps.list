@@ -11,6 +11,7 @@ x-scheme-handler/about=org.mozilla.firefox
 x-scheme-handler/unknown=org.mozilla.firefox
 application/pdf=com.github.xournalpp.xournalpp.desktop
 image/jxl=swayimg.desktop
+application/schema+json=dev.zed.Zed.desktop
 
 [Added Associations]
-image/jxl=swayimg.desktop;
+application/schema+json=dev.zed.Zed.desktop;
