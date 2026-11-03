@@ -47,5 +47,5 @@
   },
   "ui_font_size": 16.0,
   "buffer_font_size": 15,
-  "theme": "{{ if eq (get . "theme" | default "tokyonight") "tokyonight" }}Tokyo Night{{ else }}Gruvbox Dark Hard{{ end }}",
+  "theme": "{{ if eq (get . "theme" | default "tokyonight") "tokyonight" }}Tokyo Night{{ else if eq (get . "theme" | default "tokyonight") "gruvbox-light" }}Gruvbox Light{{ else }}Gruvbox Dark Hard{{ end }}",
 }

@@ -38,7 +38,7 @@
 | niri | `colour.kdl` 分发 `.chezmoitemplates/niri/<value>.kdl`（单 `layout` 块，中性值各片段自带） | 1 行 |
 | bat | 自带主题双份 `themes/<value>.tmTheme` + `config` 里 `--theme=` 一行；增量主题后必跑 `bat cache --build`（已进 Makefile） | 1 行 |
 | fuzzel | `fuzzel.ini` 分发 `.chezmoitemplates/fuzzel/<value>.ini`（只含 `[colors]`，RGBA 无 `#` 小写，`border` 跟 niri focus-ring；主文件另带 `font` + `[border]`，字体同 kitty，`width=5`/`radius=0`） | 1+2 行 |
-| zed | `settings.json` 里 `theme` 一行：tokyonight 用已装扩展主题 `Tokyo Night`，两个 gruvbox 都回落内置 `Gruvbox Dark Hard`；`settings.json` 其余内容原样保留，插件在 Zed 数据目录不受 chezmoi 管理 | 1 行 |
+| zed | `settings.json` 里 `theme` 一行：tokyonight 用已装扩展主题 `Tokyo Night`，gruvbox-dark 用内置 `Gruvbox Dark Hard`，gruvbox-light 用内置 `Gruvbox Light`（不是 `Gruvbox Light Hard`）；`settings.json` 其余内容原样保留，插件在 Zed 数据目录不受 chezmoi 管理 | 1 行 |
 | noctalia | 自带 palette 双份 `palettes/<value>.json`（只写 `dark`，`light` 缺省回落 dark），`setting.toml` 里 `source = "custom"` + `custom_palette = "{{ .theme }}"` + `mode = "{{ if contains "light" (get . "theme") }}light{{ else }}dark{{ end }}"`（名字含 `light` 才认浅色，`shell_mode = "follow"` 跟随；**别写死 `mode = "dark"`**：palette 的 `dark`/`light` 是两套独立派生公式，浅色色值塞进 dark 分支会被夹成深色）；`[shell]` 固定 `app_icon_color = "on_surface_variant"` + `app_icon_colorize = true`（角色名引用，自动跟主题，静态行不算模板）；`builtin_ids` 只留 gtk3/gtk4/qt/kcolorscheme（GTK/Qt/KDE 色彩方案，后者由 noc 模板的 `post_action = "kde-color-scheme"` 自动合并进 `kdeglobals`），`community_ids` 保持空；kitty/niri/yazi/fcitx5/starship 一律不管（noctalia 再生成它们的文件就是打架） | 2 行 |
 
 原则：软件原生支持多主题用原生的（starship palettes）；没有才用 chezmoi 分发。
