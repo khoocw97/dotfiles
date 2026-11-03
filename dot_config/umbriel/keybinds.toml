@@ -1,25 +1,25 @@
 [keybinds]
 # Personal
-"Mod+E" = "spawn:kitty -e yazi"
-"Mod+Return" = "spawn:kitty"
-"Mod+B" = "spawn:firefox || flatpak run org.mozilla.firefox"
-"Mod+G" = "spawn:google-chrome-stable || flatpak run com.google.Chrome"
-"Mod+O" = "spawn:obs || flatpak run com.obsproject.Studio"
-"Mod+N" = "spawn:zed"
-"Mod+P" = "spawn:kitty --class PrintTerminal -- ~/.local/share/print-script/print"
-"Mod+F1" = "spawn:~/.local/bin/sbz-toggle-headphone"
-"Mod+Space" = "spawn:fuzzel"
+"Mod+E" = "spawn kitty -e yazi"
+"Mod+Return" = "spawn kitty"
+"Mod+B" = "spawn firefox || flatpak run org.mozilla.firefox"
+"Mod+G" = "spawn google-chrome-stable || flatpak run com.google.Chrome"
+"Mod+O" = "spawn obs || flatpak run com.obsproject.Studio"
+"Mod+N" = "spawn zed"
+"Mod+P" = "spawn kitty --class PrintTerminal -- ~/.local/share/print-script/print"
+"Mod+F1" = "spawn ~/.local/bin/sbz-toggle-headphone"
+"Mod+Space" = "spawn fuzzel"
 
 # noctalia setting
-# "Mod+Space" = "spawn:noctalia msg panel-toggle launcher"
-"Mod+V" = "spawn:noctalia msg panel-toggle clipboard"
-"Mod+W" = "spawn:noctalia msg panel-toggle wallpaper"
-# "Mod+X" = "spawn:noctalia msg bar-toggle" # 隐藏bar
-"Mod+X" = "spawn:noctalia msg panel-toggle session"
-"Mod+S" = "spawn:noctalia msg settings-toggle"
-"Print" = "spawn:noctalia msg screenshot-region"
-"Mod+Print" = "spawn:noctalia msg screenshot-fullscreen"
-"Mod+Alt+Print" = "spawn:noctalia msg screenshot-fullscreen pick" # 全屏截图(多屏选择)
+# "Mod+Space" = "spawn noctalia msg panel-toggle launcher"
+"Mod+V" = "spawn noctalia msg panel-toggle clipboard"
+"Mod+W" = "spawn noctalia msg panel-toggle wallpaper"
+# "Mod+X" = "spawn noctalia msg bar-toggle" # 隐藏bar
+"Mod+X" = "spawn noctalia msg panel-toggle session"
+"Mod+S" = "spawn noctalia msg settings-toggle"
+"Print" = "spawn noctalia msg screenshot-region"
+"Mod+Print" = "spawn noctalia msg screenshot-fullscreen"
+"Mod+Alt+Print" = "spawn noctalia msg screenshot-fullscreen pick" # 全屏截图(多屏选择)
 
 # system setting
 "Mod+Shift+Q" = "session-quit"
@@ -27,23 +27,23 @@
 "Mod+Shift+Slash" = "cheatsheet-toggle"
 
 # brightness setting
-"XF86MonBrightnessDown" = { action = "spawn:noctalia msg brightness-down 10", allow_when_locked = true }
-"XF86MonBrightnessUp" = { action = "spawn:noctalia msg brightness-up 10", allow_when_locked = true }
-"XF86KbdBrightnessUp"   = "spawn:brightnessctl -d smc::kbd_backlight set +10%"
-"XF86KbdBrightnessDown" = "spawn:brightnessctl -d smc::kbd_backlight set 10%-"
+"XF86MonBrightnessDown" = { action = "spawn noctalia msg brightness-down 10", allow_when_locked = true }
+"XF86MonBrightnessUp" = { action = "spawn noctalia msg brightness-up 10", allow_when_locked = true }
+"XF86KbdBrightnessUp"   = "spawn brightnessctl -d smc::kbd_backlight set +10%"
+"XF86KbdBrightnessDown" = "spawn brightnessctl -d smc::kbd_backlight set 10%-"
 "Mod+Shift+P" = "dpms-off" # power off screen, use dpms-off:DP-2 to specify
 # volume setting
-"XF86AudioRaiseVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
-"XF86AudioLowerVolume" = "spawn:wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+"XF86AudioRaiseVolume" = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+"XF86AudioLowerVolume" = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
 # media setting
-"XF86AudioMute" = "spawn:wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
-"XF86AudioPlay" = "spawn:playerctl play-pause"
-"XF86AudioNext" = "spawn:playerctl next"
-"XF86AudioPrev" = "spawn:playerctl previous"
+"XF86AudioMute" = "spawn wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+"XF86AudioPlay" = "spawn playerctl play-pause"
+"XF86AudioNext" = "spawn playerctl next"
+"XF86AudioPrev" = "spawn playerctl previous"
 # mac keyboard setting
 "XF86LaunchA" = { action = "overview-toggle", repeat = false } # F3
-"XF86LaunchB" = "spawn:noctalia msg screenshot-region" # F4
-"Mod+XF86LaunchB" = { action = "spawn:noctalia msg screenshot-fullscreen", repeat = false }
+"XF86LaunchB" = "spawn noctalia msg screenshot-region" # F4
+"Mod+XF86LaunchB" = { action = "spawn noctalia msg screenshot-fullscreen", repeat = false }
 
 # Window setting
 "Mod+Tab" = {action = "overview-toggle", repeat = false}
@@ -109,21 +109,21 @@
 "Mod+Shift+Ctrl+Right" = "column-move-to-output-right"
 
 # Workspace switching
-"Mod+1" = "workspace-switch:1"
-"Mod+2" = "workspace-switch:2"
-"Mod+3" = "workspace-switch:3"
-"Mod+4" = "workspace-switch:4"
-"Mod+5" = "workspace-switch:5"
-"Mod+6" = "workspace-switch:6"
-"Mod+7" = "workspace-switch:7"
-"Mod+8" = "workspace-switch:8"
-"Mod+9" = "workspace-switch:9"
-"Mod+Ctrl+1" = "window-move-to-workspace:1" # Move window to workspace
-"Mod+Ctrl+2" = "window-move-to-workspace:2"
-"Mod+Ctrl+3" = "window-move-to-workspace:3"
-"Mod+Ctrl+4" = "window-move-to-workspace:4"
-"Mod+Ctrl+5" = "window-move-to-workspace:5"
-"Mod+Ctrl+6" = "window-move-to-workspace:6"
-"Mod+Ctrl+7" = "window-move-to-workspace:7"
-"Mod+Ctrl+8" = "window-move-to-workspace:8"
-"Mod+Ctrl+9" = "window-move-to-workspace:9"
+"Mod+1" = "workspace-switch 1"
+"Mod+2" = "workspace-switch 2"
+"Mod+3" = "workspace-switch 3"
+"Mod+4" = "workspace-switch 4"
+"Mod+5" = "workspace-switch 5"
+"Mod+6" = "workspace-switch 6"
+"Mod+7" = "workspace-switch 7"
+"Mod+8" = "workspace-switch 8"
+"Mod+9" = "workspace-switch 9"
+"Mod+Ctrl+1" = "window-move-to-workspace 1" # Move window to workspace
+"Mod+Ctrl+2" = "window-move-to-workspace 2"
+"Mod+Ctrl+3" = "window-move-to-workspace 3"
+"Mod+Ctrl+4" = "window-move-to-workspace 4"
+"Mod+Ctrl+5" = "window-move-to-workspace 5"
+"Mod+Ctrl+6" = "window-move-to-workspace 6"
+"Mod+Ctrl+7" = "window-move-to-workspace 7"
+"Mod+Ctrl+8" = "window-move-to-workspace 8"
+"Mod+Ctrl+9" = "window-move-to-workspace 9"
