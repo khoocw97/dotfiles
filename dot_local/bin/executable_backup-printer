@@ -1,0 +1,121 @@
+#!/bin/bash
+# manage-cups: 交互式 CUPS 打印机配置管理器 (支持 fzf 循环菜单)
+set -euo pipefail
+
+BACKUP_DIR="$HOME/.config/cups-backup"
+FILES=(printers.conf cupsd.conf cups-files.conf lpoptions)
+
+# 确保备份目录存在
+mkdir -p "$BACKUP_DIR/ppd"
+
+# 优雅降级：检查 fzf 是否可用
+has_fzf() {
+    command -v fzf >/dev/null 2>&1
+}
+
+do_backup() {
+    echo -e "\n[⚡] 正在从 /etc/cups 备份到家目录..."
+    sudo -v
+
+    # 业界标准：刷写内存到磁盘，同时复制
+    sudo systemctl reload cups 2>/dev/null || true
+
+    # 复制基础文件
+    for f in "${FILES[@]}"; do
+        if [ -f "/etc/cups/$f" ]; then
+            sudo cp -p "/etc/cups/$f" "$BACKUP_DIR/"
+        fi
+    done
+
+    # 复制 PPD 驱动
+    sudo find /etc/cups/ppd -maxdepth 1 -name '*.ppd' -exec cp -p -t "$BACKUP_DIR/ppd/" {} + 2>/dev/null || true
+
+    # 更改所有权为当前用户，方便 chezmoi 跟踪和 Git 提交
+    sudo chown -R "$(id -u):$(id -g)" "$BACKUP_DIR"
+
+    echo "✔ 备份完成！当前 $BACKUP_DIR 状态："
+    ls -l "$BACKUP_DIR"
+}
+
+do_restore() {
+    [ -f "$BACKUP_DIR/printers.conf" ] || { echo "❌ 未找到备份文件，请先执行备份！"; return; }
+
+    echo -e "\n[⚡] 正在从家目录恢复配置到 /etc/cups..."
+    sudo -v
+
+    echo "停止 CUPS 服务..."
+    sudo systemctl stop cups
+
+    # 恢复基础配置文件
+    for f in "${FILES[@]}"; do
+        [ -f "$BACKUP_DIR/$f" ] && sudo cp "$BACKUP_DIR/$f" /etc/cups/
+    done
+
+    # 恢复 PPD
+    sudo mkdir -p /etc/cups/ppd
+    if [ -d "$BACKUP_DIR/ppd" ]; then
+        sudo find "$BACKUP_DIR/ppd" -maxdepth 1 -name '*.ppd' -exec sudo cp -t /etc/cups/ppd/ {} + 2>/dev/null || true
+    fi
+
+    # 修正权限与所有权 (root:lp)
+    sudo chown root:lp /etc/cups/printers.conf 2>/dev/null || true
+    sudo chown -R root:lp /etc/cups/ppd 2>/dev/null || true
+    sudo chmod 600 /etc/cups/printers.conf 2>/dev/null || true
+
+    echo "启动 CUPS 服务..."
+    sudo systemctl start cups
+
+    echo "✔ 恢复完成！当前打印机状态："
+    lpstat -v || echo "⚠️ 提示：lpstat 检查失败，请确认 cups 服务状态。"
+}
+
+# === 核心交互式循环逻辑 ===
+while true; do
+    options=(
+        "📦 Backup  - 从 /etc/cups 备份到家目录 (供 chezmoi 管理)"
+        "🚀 Restore - 从家目录立即同步到 /etc/cups (强制覆盖并重启服务)"
+        "📊 Status  - 查看当前系统打印机状态 (lpstat)"
+        "❌ Exit    - 退出脚本"
+    )
+
+    if has_fzf; then
+        # 使用 fzf 进行模糊选择
+        choice=$(printf "%s\n" "${options[@]}" | fzf --prompt="请选择 CUPS 管理操作 > " --height=10 --layout=reverse --border)
+    else
+        # 降级方案：经典 Bash Select 数字菜单
+        echo -e "\n=== CUPS 打印机配置管理器 ==="
+        PS3="请选择操作对应的数字 (1-4): "
+        select opt in "${options[@]}"; do
+            choice="$opt"
+            break
+        done
+    fi
+
+    # 如果用户直接按了 ESC 或 Ctrl+C (针对 fzf)
+    if [ -z "$choice" ]; then
+        echo "未选择任何操作，退出。"
+        break
+    fi
+
+    # 根据选择执行对应函数
+    case "$choice" in
+        *"Backup"*)
+            do_backup
+            ;;
+        *"Restore"*)
+            do_restore
+            ;;
+        *"Status"*)
+            echo -e "\n--- 打印机设备状态 ---"
+            lpstat -v || true
+            echo "--------------------"
+            ;;
+        *"Exit"*)
+            echo "谢谢使用，再见！"
+            break
+            ;;
+    esac
+
+    # 每次操作完，打印一条分割线，提示准备进入下一次循环选择
+    echo -e "\n=============================================="
+done

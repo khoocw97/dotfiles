@@ -11,6 +11,9 @@
 # make/just manual install
 .config/systemd/user/**
 
+# CUPS 打印机备份(backup-printer 生成, 含权限/设备数据, 不随 chezmoi 分发)
+cups/**
+
 Makefile
 justfile
 README.md
