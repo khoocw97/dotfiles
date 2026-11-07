@@ -1,0 +1,49 @@
+[general]
+# mod_key = "Super"            # Mod in keybinds; defaults to Super (Alt when nested)
+xwayland = true                # requires restart to change
+show_cheatsheet = false         # show keybinds overlay on startup
+focus_on_activate = false      # activation requests mark urgent without stealing focus
+honor_restored_maximize = false # let apps restore their saved maximized state
+
+[environment]
+# GTK_THEME = "Adwaita:dark"
+XCURSOR_THEME = "Bibata-Modern-Ice"
+XCURSOR_SIZE = "24"
+QT_QPA_PLATFORMTHEME = "gtk3"
+ELECTRON_OZONE_PLATFORM_HINT = "wayland"
+GDK_BACKEND = "wayland,x11"
+QT_QPA_PLATFORM = "wayland;xcb"
+
+[workspaces]
+back_and_forth = false
+
+# Appearance -----------------------------------------------------------------
+[appearance]
+prefer_no_csd = true
+border_width = 5               # 0-100
+outer_border_width = 0         # 0-100
+corner_radius = 0              # 0-100
+
+[appearance.blur]
+enabled = true
+optimized = true
+passes = 2                     # 0-8
+radius = 5                     # 0-100
+noise = 0.02                   # 0.0-1.0
+brightness = 0.9               # 0.0-2.0
+contrast = 0.9                 # 0.0-2.0
+saturation = 1.1               # 0.0-2.0
+
+[appearance.shadow]
+enabled = true
+softness = 2                   # 0-200, 0 = hard edge
+offset_x = 2                   # -200 to 200
+offset_y = 2
+
+# Overview -------------------------------------------------------------------
+
+[overview]
+zoom = 0.5                     # 0.1-0.75
+background_blur = true       # blur the wallpaper while the overview is open
+# background_tint = "#10101430"
+# workspace_background = "#00000044" # set alpha to FF for an opaque background

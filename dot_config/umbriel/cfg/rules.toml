@@ -38,13 +38,15 @@ default_workspace = 2
 default_maximize = true
 default_focused = true
 
-# Steam notification toasts
 [[window_rule]]
-match.app_id = "^steam$"
 match.title = "^notificationtoasts_.+_desktop"
-default_position = { x = 10, y = 10, anchor = "bottom_right" }
+default_position = { x = 0, y = 0, anchor = "bottom_right" }
 default_focused = false
 default_pinned = true
+
+[[window_rule]]
+match.app_id = "^steam_app_.*$"
+confine_pointer = true
 
 [[window_rule]]
 match.title = "^Picture-in-Picture$"
