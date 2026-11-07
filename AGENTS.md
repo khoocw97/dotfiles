@@ -6,7 +6,7 @@
 
 - 变量 `theme`，合法值只有三个：`tokyonight`（默认）、`gruvbox-dark`、`gruvbox-light`。
 - 存放：`~/.config/chezmoi/chezmoi.toml` 的 `[data] theme`；默认值在 `.chezmoi.toml.tmpl`。
-- 切换：`make <theme>`（如 `make gruvbox-dark`），初装 `make install`，重置 `make reset`（= `make tokyonight`）。临时的单次覆盖用
+- 切换：`just <theme>`（如 `just gruvbox-dark`），初装 `just install`，重置 `just reset`（= `just tokyonight`）。临时的单次覆盖用
   `chezmoi <cmd> --override-data '{"theme":"gruvbox-dark"}'`（不持久化）。
 - 模板里读变量必须用安全写法 `{{ get . "theme" | default "tokyonight" }}`，
   直接 `{{ .theme }}` 会因 `missingkey=error` 炸掉。
@@ -38,7 +38,7 @@
 | fcitx5 | 整目录双份（flat 无 SVG），`classicui.conf` 里 `Theme={{ .theme }}` | 1 行 |
 | yazi | flavor 双份，`theme.toml` 里 `dark/light = "{{ .theme }}"` | 2 行 |
 | niri | `colour.kdl` 分发 `.chezmoitemplates/niri/<value>.kdl`（单 `layout` 块，中性值各片段自带） | 1 行 |
-| bat | 自带主题双份 `themes/<value>.tmTheme` + `config` 里 `--theme=` 一行；增量主题后必跑 `bat cache --build`（已进 Makefile） | 1 行 |
+| bat | 自带主题双份 `themes/<value>.tmTheme` + `config` 里 `--theme=` 一行；增量主题后必跑 `bat cache --build`（已进 justfile） | 1 行 |
 | fuzzel | `fuzzel.ini` 分发 `.chezmoitemplates/fuzzel/<value>.ini`（只含 `[colors]`，RGBA 无 `#` 小写，`border` 跟 niri focus-ring；主文件另带 `font` + `[border]`，字体同 kitty，`width=5`/`radius=0`） | 1+2 行 |
 | zed | `settings.json` 里 `theme` 一行：tokyonight 用已装扩展主题 `Tokyo Night`，gruvbox-dark 用内置 `Gruvbox Dark Hard`，gruvbox-light 用内置 `Gruvbox Light`（不是 `Gruvbox Light Hard`）；`settings.json` 其余内容原样保留，插件在 Zed 数据目录不受 chezmoi 管理 | 1 行 |
 | kde | `private_kdeglobals` 分发 `.chezmoitemplates/kde/<value>.colors`（完整 KDE 色彩方案，含 `[General]`）；`[Colors:Header][Inactive]` 与 `[Colors:Header]` 全等、`[WM]` inactive 与 active 全等、`ColorEffects:Inactive` 关闭，避免焦点切换变色；同一份另装到 `~/.local/share/color-schemes/<value>.colors` | 1+3 行 |
@@ -46,10 +46,10 @@
 
 原则：软件原生支持多主题用原生的（starship palettes）；没有才用 chezmoi 分发。
 fcitx5 主题禁止 SVG/透明色（出过生产事故：`fill-opacity < 1` 导致整框发虚），纯色优先。
-`make <theme>` 落盘后顺手热加载：fcitx5 走 `busctl … ReloadAddonConfig`、
+`just <theme>` 落盘后顺手热加载：fcitx5 走 `busctl … ReloadAddonConfig`、
 niri 走 `niri msg action load-config-file`、umbriel 走 `umbriel msg config-reload`、
 noctalia 走 `noctalia msg config-reload`；
-四行一律 `-@… || true`，没装对应软件/没跑 compositor 的机器静默跳过。
+四行一律 `@… || true`，没装对应软件/没跑 compositor 的机器静默跳过。
 
 ## 4. 色板（唯一真源，改色先改这里再同步各文件）
 
@@ -78,7 +78,7 @@ KDE：`bg_view` 跟 kitty `background`，`bg_window` 跟 surface，`bg_header` �
 
 `.chezmoiignore` 按 `XDG_CURRENT_DESKTOP`（=`env "XDG_CURRENT_DESKTOP"|lower`）ignore 整目录：
 含 `niri` 只留 niri，含 `umbriel` 只留 umbriel。source 根的非管理文件
-（Makefile、README.md、AGENTS.md 等）必须同步加进 `.chezmoiignore`，
+（README.md、AGENTS.md 等）必须同步加进 `.chezmoiignore`，
 否则会被当成 `~/` 目标文件。
 
 ## 6. 验证铁律
@@ -87,4 +87,4 @@ KDE：`bg_view` 跟 kitty `background`，`bg_window` 跟 surface，`bg_header` �
   `STARSHIP_CONFIG=<render> starship prompt` 真加载。
 - 纯重构（拆文件、改名）必须重构前后渲染 `diff` 为空（注释行改写除外）。
 - 对比度：彩底上的字至少 4.5:1，算完再提交（`python3` 现算）。
-- 跑完 `make <theme>` 切回来，保持工作区停在改动前的主题。
+- 跑完 `just <theme>` 切回来，保持工作区停在改动前的主题。

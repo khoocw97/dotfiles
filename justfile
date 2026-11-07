@@ -1,4 +1,4 @@
-# dotfiles runner (mirrors Makefile). Usage: `just --list`
+# dotfiles runner. Usage: `just --list`
 
 CONFIG := env_var('HOME') + '/.config/chezmoi/chezmoi.toml'
 # 与 .chezmoi.toml.tmpl 的 sourceDir 保持一致
@@ -26,8 +26,17 @@ msi:
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/msige602pl-fix-audio.service" "$HOME/.config/systemd/user/msige602pl-fix-audio.service"
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/obs-studio.service" "$HOME/.config/systemd/user/obs-studio.service"
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/ferdium.service" "$HOME/.config/systemd/user/ferdium.service"
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/sunshine.service" "$HOME/.config/systemd/user/sunshine.service"
     @systemctl --user daemon-reload
-    @systemctl --user enable --now msige602pl-fix-audio.service obs-studio.service ferdium.service
+    @systemctl --user enable --now msige602pl-fix-audio.service obs-studio.service ferdium.service sunshine.service
+    @echo Done
+
+# sunshine autostart on boot
+[group('command')]
+sunshine:
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/sunshine.service" "$HOME/.config/systemd/user/sunshine.service"
+    @systemctl --user daemon-reload
+    @systemctl --user enable --now sunshine.service
     @echo Done
 
 # install firefox - no rounded
