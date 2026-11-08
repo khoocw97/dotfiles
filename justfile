@@ -14,6 +14,7 @@ default:
 install:
     @[ -d "{{SOURCE}}/.git" ] || git clone "{{REPO}}" "{{SOURCE}}"
     @chezmoi -S "{{SOURCE}}" apply --init
+    # @just fcitx5
     @just firefox
 
 # reset to tokyonight
@@ -64,6 +65,14 @@ firefox:
     done
     [ "$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
 
+# setup input-method environment variables
+[group('im')]
+ibus: (_write-im "ibus")
+
+# setup input-method environment variables
+[group('im')]
+fcitx5: (_write-im "fcitx5")
+
 [group('theme')]
 gruvbox-dark: (_apply-theme "gruvbox-dark")
 
@@ -91,3 +100,28 @@ _apply-theme theme:
     [ -z "$wp" ] || noctalia msg wallpaper-set "$wp" >/dev/null 2>&1 || true
     @bat cache --build >/dev/null 2>&1 || true
     @echo Done
+
+_write-im im:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    case "{{im}}" in
+        fcitx5) mod=fcitx; xmod=@im=fcitx ;;
+        ibus)   mod=ibus;  xmod=@im=ibus  ;;
+        *) echo "未知输入法: {{im}}（只认 fcitx5 / ibus）" >&2; exit 1 ;;
+    esac
+    mkdir -p ~/.config/environment.d ~/.config/gtk-3.0
+    # GTK 不设 GTK_IM_MODULE 环境变量；Xwayland 的 GTK 只认 settings.ini
+    printf 'QT_IM_MODULES=wayland;%s\nQT_IM_MODULE=%s\nXMODIFIERS=%s\nSDL_IM_MODULE=%s\n' \
+        "$mod" "$mod" "$xmod" "$mod" > ~/.config/environment.d/im.conf
+    gtk=~/.config/gtk-3.0/settings.ini
+    touch "$gtk"
+    if grep -q '^gtk-im-module=' "$gtk"; then
+        sed -i "s/^gtk-im-module=.*/gtk-im-module=$mod/" "$gtk"
+    elif grep -q '^\[Settings\]' "$gtk"; then
+        sed -i "/^\[Settings\]/a gtk-im-module=$mod" "$gtk"
+    else
+        printf '[Settings]\ngtk-im-module=%s\n' "$mod" >> "$gtk"
+    fi
+    # flatpak 读不到 settings.ini，走全局 override
+    command -v flatpak >/dev/null && flatpak override --user --env=GTK_IM_MODULE="$mod" --env=QT_IM_MODULE="$mod" || true
+    echo "已写 {{im}} 环境变量，重新登录生效"

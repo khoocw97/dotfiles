@@ -88,3 +88,14 @@ KDE：`bg_view` 跟 kitty `background`，`bg_window` 跟 surface，`bg_header` �
 - 纯重构（拆文件、改名）必须重构前后渲染 `diff` 为空（注释行改写除外）。
 - 对比度：彩底上的字至少 4.5:1，算完再提交（`python3` 现算）。
 - 跑完 `just <theme>` 切回来，保持工作区停在改动前的主题。
+
+## 7. 输入法开关
+
+`just fcitx5` / `just ibus` 只写环境变量，别的一概不做（自启仍在 niri/umbriel 的 autostart 里）。
+
+- `~/.config/environment.d/im.conf`：`QT_IM_MODULES=wayland;<mod>`、`QT_IM_MODULE`、
+  `XMODIFIERS=@im=<mod>`、`SDL_IM_MODULE`。
+- **不设 `GTK_IM_MODULE`**：Wayland 下设了坏。Xwayland 的 GTK 靠
+  `~/.config/gtk-3.0/settings.ini` 的 `gtk-im-module=<mod>`。
+- flatpak 读不到 settings.ini，用 `flatpak override --user --env=GTK_IM_MODULE=… --env=QT_IM_MODULE=…` 全局覆盖。
+- 环境变量要重新登录才生效。
