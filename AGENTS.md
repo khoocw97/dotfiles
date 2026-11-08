@@ -99,3 +99,13 @@ KDE：`bg_view` 跟 kitty `background`，`bg_window` 跟 surface，`bg_header` �
   `~/.config/gtk-3.0/settings.ini` 的 `gtk-im-module=<mod>`。
 - flatpak 读不到 settings.ini，用 `flatpak override --user --env=GTK_IM_MODULE=… --env=QT_IM_MODULE=…` 全局覆盖。
 - 环境变量要重新登录才生效。
+
+## 8. just 与 make 同步
+
+`Makefile` 是 `justfile` 的手工重写版（不调用 just：Ubuntu 24.04 的 just 1.21
+没有 `[group]`，Debian bookworm 源里干脆没有 just，这些机器只能走 `make`）。
+
+- 改 `justfile` 的任何 recipe，必须在同一次改动里同步进 `Makefile`；两边目标名、
+  行为、文案保持一致（`apply-theme`/`write-im` 对应 `_apply-theme`/`_write-im`）。
+- `make` 默认 `help` 列目标；`just` 继续用 `[group(...)]` 分组，两边互不影响。
+- 两文件都在 `.chezmoiignore` 里，不会被当 `~/` 目标文件分发。

@@ -15,5 +15,6 @@
 cups/**
 
 justfile
+Makefile
 README.md
 AGENTS.md
