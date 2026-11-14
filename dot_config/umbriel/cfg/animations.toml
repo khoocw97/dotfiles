@@ -12,7 +12,7 @@ duration_ms = 150
 [animation.windows_out]
 enabled = true
 duration_ms = 150
-style = "fade"        # "fade" or "slide"
+style = "fade"        # "fade", "slide", "popin", or "zoom"
 
 [animation.windows_move]
 enabled = true

@@ -3,6 +3,7 @@ high_contrast = false
 ui_scale = 1.25
 
 [audio]
+colorize_icons = true
 enable_overdrive = false
 enable_sounds = false
 sound_volume = 0.5
@@ -119,6 +120,7 @@ auto_hide = false
 background_opacity = 0.87999999523162842
 border = "outline_variant"
 border_width = 0.0
+colorize_icons = true
 concave_edge_corners = false
 cross_axis_padding = 8
 enabled = false
@@ -259,6 +261,7 @@ temperature_night = 4000
 background_opacity = 0.97000002861022949
 border = true
 collapse_on_dismiss = true
+colorize_icons = true
 enable_daemon = true
 history_retention_hours = 0
 keep_dismissed_in_history = true
@@ -323,7 +326,6 @@ enabled = [ "dotnetrob/cat", "blackbartblues/audio-switcher" ]
 
 [shell]
 app_icon_color = "on_surface_variant"
-app_icon_colorize = true
 avatar_path = ""
 button_borders = true
 card_borders = true
@@ -346,8 +348,10 @@ niri_overview_type_to_launch_enabled = false
 offline_mode = false
 password_style = "default"
 polkit_agent = true
+polkit_colorize_icons = true
 popup_borders = true
 popup_shadows = true
+screen_time_colorize_icons = true
 screen_time_enabled = false
 settings_show_advanced = true
 settings_window_translucent = false
@@ -370,6 +374,7 @@ time_format = "{:%r}"
     app_grid = false
     auto_paste = "auto"
     categories = true
+    colorize_icons = true
     compact = false
     fetch_exchange_rates = true
     pinned = []
@@ -494,6 +499,7 @@ time_format = "{:%r}"
     direction = "down"
 
     [shell.window_switcher]
+    colorize_icons = true
     mru = false
 
 [storage]
@@ -579,6 +585,7 @@ refresh_minutes = 30
 unit = "metric"
 
 [widget.active_window]
+colorize_icons = true
 icon_size = 14.0
 max_length = 260.0
 min_length = 80.0
@@ -665,6 +672,7 @@ enabled = false
 type = "theme_mode"
 
 [widget.tray]
+colorize_icons = true
 drawer = true
 type = "tray"
 
@@ -674,3 +682,6 @@ type = "volume"
 
 [widget.widget]
 type = "blackbartblues/audio-switcher:widget"
+
+[widget.workspaces]
+colorize_icons = true

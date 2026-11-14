@@ -40,7 +40,7 @@ left_handed = true # flip 180°
 # calibration_matrix = [1.0, 0.0, 0.0, 0.0, 1.0, 0.0]  # libinput calibration, 6 numbers
 
 [input.focus]
-follows_mouse = true
+follows_mouse = "sloppy"       # "off", "sloppy", or "always"
 # Refuse hover focus when revealing the window would scroll further than this,
 # measured in viewport widths (1.0 = one full screen). Omit for no limit.
 follows_mouse_max_scroll = 0.0

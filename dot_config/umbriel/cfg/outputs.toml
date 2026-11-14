@@ -19,4 +19,6 @@ mode = "1920x1080@59.940"
 position = [1920, 0]
 scale = 1.00
 
-
+[output."Apple Computer Inc 0x9CC5 Unknown"]
+mode = "1280x800@60.223"
+scale = 1.0
