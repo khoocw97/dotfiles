@@ -74,6 +74,14 @@ default_workspace = 2
 default_focused = false
 default_maximize = true
 
+# OBS crash dialog - plain floating, don't inherit the maximized OBS rule.
+[[window_rule]]
+match.app_id = "^com[.]obsproject[.]Studio$"
+match.title = "Crash Detected"
+default_floating = true
+default_maximize = false
+default_focused = true
+
 # Put this AFTER the generic OBS rule so the projector overrides it.
 [[window_rule]]
 match.app_id = "^com[.]obsproject[.]Studio$"
