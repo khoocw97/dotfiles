@@ -3,95 +3,140 @@ set -euo pipefail
 
 # 定义 Fcitx 5 的 Rime 用户目录
 RIME_DIR="$HOME/.local/share/fcitx5/rime"
+LEGACY_DIR="$HOME/.config/fcitx5/rime"
+NIGHTLY_URL="https://github.com/iDvel/rime-ice/releases/download/nightly/full.zip"
+PLUM_URL="https://github.com/rime/plum.git"
+ICE="iDvel/rime-ice"
 
-# 删除 rime 文件夹
-function 删除rime文件夹() {
-    rm -rf ~/.config/fcitx5/rime
-    echo "已删除 rime 文件夹"
+TMP_DIR=$(mktemp -d)
+trap 'rm -rf "$TMP_DIR"' EXIT
+
+info() { gum log --level info "$*"; }
+warn() { gum log --level warn "$*"; }
+error() { gum log --level error "$*"; }
+
+is_installed() { [[ -f "$RIME_DIR/default.yaml" ]]; }
+status_text() { if is_installed; then echo "已安装"; else echo "未安装"; fi; }
+
+header() {
+    gum style --border double --border-foreground 212 --padding "0 2" --margin "1 0" --bold "Rime 雾凇拼音"
+    gum style --faint --margin "0 0 1 2" "当前状态: $(status_text)  ·  $RIME_DIR"
 }
 
-# 重新部署 rime（参考 fedora-niri setup-rime）
 deploy_rime() {
-    busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 SetConfig sv "fcitx://config/addon/rime/deploy" s "" >/dev/null 2>&1 || true
-}
-
-# 检查并安装 Fcitx5/Rime 依赖 (Fedora)
-install_deps() {
-    echo "==== 检查并安装 Fcitx5/Rime 依赖 (Fedora) ===="
-    if ! command -v dnf &>/dev/null; then
-        echo "错误: 未检测到 dnf，仅支持 Fedora"
-        exit 1
+    if pgrep -x fcitx5 >/dev/null; then
+        busctl --user call org.fcitx.Fcitx5 /controller org.fcitx.Fcitx.Controller1 \
+            SetConfig sv "fcitx://config/addon/rime/deploy" s "" >/dev/null 2>&1 || true
+        info "已向 Fcitx 5 发送重新部署指令"
+    else
+        warn "未检测到 fcitx5 进程，下次启动时将自动加载新配置"
     fi
-    echo "安装依赖..."
-    sudo dnf install -y \
-        fcitx5 \
-        fcitx5-chinese-addons \
-        fcitx5-rime \
-        fcitx5-gtk \
-        fcitx5-qt \
-        fcitx5-configtool \
-        librime-lua \
-        librime-octagram
 }
 
-# 准备 Plum 工具
-clone_plum() {
-    TMP_DIR=$(mktemp -d)
-    if ! git clone https://github.com/rime/plum.git "$TMP_DIR/plum"; then
-        rm -rf "$TMP_DIR"
-        echo "Git 拉取失败，请检查网络后重试，未更改现有配置"
+install_deps() {
+    if ! command -v dnf >/dev/null; then
+        error "未检测到 dnf，仅支持 Fedora"
         return 1
     fi
+    sudo -v
+    gum spin --show-output --title "安装 Fcitx5/Rime 依赖..." -- \
+        sudo -n dnf install -y \
+        fcitx5 fcitx5-chinese-addons fcitx5-rime fcitx5-gtk fcitx5-qt \
+        fcitx5-configtool librime-lua librime-octagram curl unzip
 }
 
-# 拉取并安装 雾凇拼音（全拼）
-apply_rime() {
-    clone_plum || return 1
-    cd "$TMP_DIR/plum"
+# 从 nightly release 安装最新 commit 的配置与词库
+install_nightly() {
+    local tmp zip
+    tmp=$(mktemp -d "$TMP_DIR/XXXX")
+    zip="$tmp/full.zip"
 
-    echo -e "\n==== 1. 开始安装/更新 雾凇拼音 (全拼) ===="
-    rime_dir="$RIME_DIR" bash rime-install iDvel/rime-ice
-
-    echo -e "\n==== 2. 开始安装 万象语法模型 (全拼) ===="
-    rime_dir="$RIME_DIR" bash rime-install iDvel/rime-ice:others/recipes/grammar:schema=rime_ice
-
-    rm -rf "$TMP_DIR"
-
-    echo -e "\n==== 3. 正在重新部署 Fcitx 5 ===="
-    if pgrep -x "fcitx5" > /dev/null; then
-        deploy_rime
-        echo "已成功向 Fcitx 5 发送重新部署指令！"
-    else
-        echo "提示：未检测到正在运行的 fcitx5 进程，下次启动时将自动加载新配置。"
+    if ! gum spin --show-error --title "下载 rime-ice nightly（最新 commit）..." -- \
+        curl -fsSL --retry 3 --connect-timeout 15 -o "$zip" "$NIGHTLY_URL"; then
+        error "下载失败，请检查网络后重试，未更改现有配置"
+        return 1
     fi
 
-    echo -e "\n==== 安装完成！ ===="
-    echo "如果失败，请右键点击系统托盘的 Fcitx 5 图标，选择「重新部署 (Deploy)」或「重启」使其生效。"
+    mkdir -p "$RIME_DIR"
+    if ! gum spin --show-error --title "解压到 $RIME_DIR..." -- \
+        unzip -oq "$zip" -d "$RIME_DIR"; then
+        error "解压失败，配置可能不完整，请重试"
+        return 1
+    fi
+
+    info "已安装 rime-ice nightly 最新 commit"
 }
 
-# 安装（含依赖）
+# 用 Plum 下载万象语法模型，并给方案打补丁
+install_grammar() {
+    local tmp
+    tmp=$(mktemp -d "$TMP_DIR/XXXX")
+
+    if ! gum spin --show-error --title "拉取 Plum..." -- \
+        git clone --depth 1 "$PLUM_URL" "$tmp/plum"; then
+        error "Git 拉取失败，请检查网络后重试"
+        return 1
+    fi
+
+    if ! (cd "$tmp/plum" && gum spin --show-error --title "安装万象语法模型..." -- \
+        env rime_dir="$RIME_DIR" bash rime-install "$ICE:others/recipes/grammar:schema=rime_ice"); then
+        error "万象语法模型安装失败"
+        return 1
+    fi
+
+    info "已安装万象语法模型"
+}
+
+apply_rime() {
+    install_nightly
+    install_grammar
+    deploy_rime
+    info "安装完成！如未生效，请右键托盘 Fcitx 5 图标选择「重新部署」"
+}
+
 install_rime() {
-    install_deps
     apply_rime
 }
 
-# 更新
 update_rime() {
     apply_rime
 }
 
-ACTION="${1:-}"
-if [[ -z "$ACTION" ]]; then
-    echo "Rime 配置"
-    PS3="请选择: "
-    select ACTION in "安装" "更新" "删除rime文件夹" "退出"; do
-        [[ -n "$ACTION" ]] && break
-    done
-fi
+delete_rime() {
+    if ! gum confirm --default=false \
+        --affirmative "删除" --negative "取消" \
+        "确定删除 Rime 用户配置？$RIME_DIR"; then
+        info "已取消"
+        return 0
+    fi
+    rm -rf "$RIME_DIR" "$LEGACY_DIR"
+    info "已删除 Rime 配置目录"
+    deploy_rime
+}
 
-case "$ACTION" in
-    安装) install_rime ;;
-    更新) update_rime ;;
-    "删除rime文件夹"|删除) 删除rime文件夹 ;;
-    *) echo "没有更改。" ;;
+menu() {
+    while true; do
+        header
+        local choice
+        choice=$(gum choose --header "请选择操作" --cursor "➜ " --height 8 \
+            "安装依赖" "安装输入法（rime-ice）" "更新" "重新部署" "删除配置" "退出") || exit 0
+        case "$choice" in
+            "安装依赖") install_deps ;;
+            "安装输入法（rime-ice）") install_rime ;;
+            "更新") update_rime ;;
+            "重新部署") deploy_rime ;;
+            "删除配置") delete_rime ;;
+            *) exit 0 ;;
+        esac
+    done
+}
+
+case "${1:-}" in
+    deps|依赖) install_deps ;;
+    install|安装) install_rime ;;
+    update|更新) update_rime ;;
+    deploy|部署) deploy_rime ;;
+    delete|删除|删除rime文件夹) delete_rime ;;
+    "") menu ;;
+    *) gum style --faint "用法: $(basename "$0") [deps|install|update|deploy|delete]" ;;
 esac
