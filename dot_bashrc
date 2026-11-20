@@ -44,6 +44,10 @@ alias df='df -h'
 # opencode
 export PATH=/home/weng/.opencode/bin:$PATH
 
+# justfile
+export JUST_JUSTFILE_NAME=justfile,.justfile,.system-upgrade
+export JUST_UNSORTED=true
+
 # chezmoi
 alias cz='chezmoi'
 alias cze='chezmoi edit'

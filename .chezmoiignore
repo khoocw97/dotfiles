@@ -18,3 +18,8 @@ justfile
 Makefile
 README.md
 AGENTS.md
+
+# 离线升级 justfile：不可变系统(/run/ostree-booted)或没有 dnf 时不分发
+{{ if or (not (lookPath "dnf")) (stat "/run/ostree-booted") }}
+.system-upgrade
+{{ end }}

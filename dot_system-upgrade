@@ -1,0 +1,48 @@
+# 系统升级。用法: just --list
+
+set shell := ["bash", "-euo", "pipefail", "-c"]
+
+[private]
+default:
+    @just --list
+
+# 常规升级，完成后询问是否重启
+up:
+    sudo dnf upgrade --refresh -y
+    @if read -rp "升级完成，现在重启? [y/N] " a && [[ $a == [yY]* ]]; then sudo systemctl reboot; else echo "未重启"; fi
+
+# 依赖冲突时追加 --allowerasing，想看细节再加 --best
+# 跨版本离线升级: just sysup 44
+sysup releasever *args:
+    sudo dnf --setopt=keepcache=1 system-upgrade download --releasever={{ releasever }} {{ args }} || { echo "下载失败。依赖冲突就重跑: just sysup {{ releasever }} --allowerasing"; exit 1; }
+    @if read -rp "下载完成，现在进入离线升级（会重启）? [y/N] " a && [[ $a == [yY]* ]]; then sudo dnf offline reboot; else echo "已下载未重启；不要了跑 just cancel"; fi
+
+# 允许降级/删包来解决依赖冲突
+resolve-dependency:
+    sudo dnf distro-sync --allowerasing
+
+# 放弃离线升级并清缓存
+cancel:
+    sudo dnf offline clean
+
+# 清理退役包和重复包
+clean:
+    command -v remove-retired-packages >/dev/null || sudo dnf install -y remove-retired-packages
+    sudo remove-retired-packages
+    sudo dnf repoquery --duplicates
+    sudo dnf remove --duplicates
+
+# 删除旧内核，保留最新的
+clean-kernel:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    old_kernels=($(dnf repoquery --installonly --latest-limit=-1 -q))
+    if [ "${#old_kernels[@]}" -eq 0 ]; then
+    	echo "No old kernels found"
+    	exit 0
+    fi
+    if ! sudo dnf remove "${old_kernels[@]}"; then
+    	echo "Failed to remove old kernels"
+    	exit 1
+    fi
+    echo "Removed old kernels"
