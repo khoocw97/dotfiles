@@ -16,6 +16,7 @@ install:
     @chezmoi -S "{{SOURCE}}" apply --init
     # @just fcitx5
     @just firefox
+    @source "$HOME/.bashrc" || true
 
 # reset to tokyonight
 [group('command')]
