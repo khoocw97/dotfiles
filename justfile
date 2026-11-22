@@ -29,8 +29,10 @@ msi:
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/obs-studio.service" "$HOME/.config/systemd/user/obs-studio.service"
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/ferdium.service" "$HOME/.config/systemd/user/ferdium.service"
     @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/sunshine.service" "$HOME/.config/systemd/user/sunshine.service"
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/mega-cmd-server.service" "$HOME/.config/systemd/user/mega-cmd-server.service"
+    @install -D -m 644 "{{SOURCE}}/dot_config/systemd/user/udiskie.service" "$HOME/.config/systemd/user/udiskie.service"
     @systemctl --user daemon-reload
-    @systemctl --user enable --now msige602pl-fix-audio.service obs-studio.service ferdium.service sunshine.service
+    @systemctl --user enable --now msige602pl-fix-audio.service obs-studio.service ferdium.service sunshine.service mega-cmd-server.service udiskie.service
     @echo Done
 
 # sunshine autostart on boot
