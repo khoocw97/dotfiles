@@ -1,11 +1,15 @@
 [Unit]
-Description=MSI GE60 2PL fix audio after graphical session starts
+Description=MSI GE60 2PL Audio Fix
 After=graphical-session.target
 PartOf=graphical-session.target
 
 [Service]
 Type=oneshot
-ExecStart=%h/.local/bin/msige602pl-fix-audio
+ExecStartPre=/usr/bin/sleep 3
+ExecStart=/usr/bin/amixer -c 1 sset Speaker unmute 0dB
+ExecStart=/usr/bin/amixer -c 1 sset Headphone unmute 0dB
+ExecStart=/usr/bin/amixer -c 1 sset Master unmute 0dB
+ExecStart=/usr/bin/amixer -c 1 sset PCM 0dB
 
 [Install]
 WantedBy=graphical-session.target
