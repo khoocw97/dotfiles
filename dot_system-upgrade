@@ -46,3 +46,12 @@ clean-kernel:
     	exit 1
     fi
     echo "Removed old kernels"
+
+# 修复GPU驱动
+fix-gpu:
+    sudo dnf5 install "kernel-devel-$(uname -r)" -y
+    sudo akmods --force --rebuild --kernels "$(uname -r)"
+    modinfo -F signer nvidia
+    modinfo -F sig_key nvidia
+    modinfo -F sig_hashalgo nvidia
+    @if read -rp "升级完成，现在重启? [y/N] " a && [[ $a == [yY]* ]]; then sudo systemctl reboot; else echo "未重启"; fi
