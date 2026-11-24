@@ -9,6 +9,7 @@ default:
 # 常规升级，完成后询问是否重启
 up:
     sudo dnf upgrade --refresh -y
+    flatpak update -y
     @if read -rp "升级完成，现在重启? [y/N] " a && [[ $a == [yY]* ]]; then sudo systemctl reboot; else echo "未重启"; fi
 
 # 依赖冲突时追加 --allowerasing，想看细节再加 --best
@@ -31,6 +32,11 @@ clean:
     sudo remove-retired-packages
     sudo dnf repoquery --duplicates
     sudo dnf remove --duplicates
+
+# 清理flatpak残留数据
+clean-flatpak:
+    flatpak uninstall --unused
+    flatpak uninstall --delete-data
 
 # 删除旧内核，保留最新的
 clean-kernel:
