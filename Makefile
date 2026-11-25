@@ -9,7 +9,7 @@ CONFIG := $(HOME)/.config/chezmoi/chezmoi.toml
 SOURCE := $(HOME)/Project/dotfiles
 REPO   := https://github.com/khoocw97/dotfiles.git
 
-.PHONY: help install reset msi sunshine firefox ibus fcitx5 \
+.PHONY: help install reset msi sunshine firefox printer ibus fcitx5 \
         tokyonight gruvbox-dark gruvbox-light apply-theme write-im
 
 help:
@@ -19,6 +19,7 @@ help:
 	@echo "make msi             install MSI services"
 	@echo "make sunshine        sunshine autostart on boot"
 	@echo "make firefox         install firefox - no rounded"
+	@echo "make printer         copy cups backup from dotfiles into ~/cups-backup"
 	@echo "make fcitx5 | ibus   setup input-method environment variables"
 
 install:
@@ -64,6 +65,11 @@ firefox:
 	    [ "$$hit" = 1 ] || echo "$$base 下无 *.default-release，跳过"; \
 	done; \
 	[ "$$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
+
+printer:
+	@mkdir -p "$(HOME)/cups-backup"
+	@cp -a "$(SOURCE)/cups/." "$(HOME)/cups-backup/"
+	@echo "已复制 $(SOURCE)/cups -> $(HOME)/cups-backup"
 
 ibus:
 	@$(MAKE) --no-print-directory write-im IM=ibus

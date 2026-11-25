@@ -2,7 +2,7 @@
 # manage-cups: 交互式 CUPS 打印机配置管理器 (支持 fzf 循环菜单)
 set -euo pipefail
 
-BACKUP_DIR="$HOME/.config/cups-backup"
+BACKUP_DIR="$HOME/cups-backup"
 FILES=(printers.conf cupsd.conf cups-files.conf lpoptions)
 
 # 确保备份目录存在

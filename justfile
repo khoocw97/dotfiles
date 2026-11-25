@@ -67,6 +67,13 @@ firefox:
     done
     [ "$found" = 1 ] || echo "flatpak/原生 均无可用 profile，跳过"
 
+# copy cups backup from dotfiles into $HOME/cups-backup
+[group('command')]
+printer:
+    @mkdir -p "$HOME/cups-backup"
+    @cp -a "{{SOURCE}}/cups/." "$HOME/cups-backup/"
+    @echo "已复制 {{SOURCE}}/cups -> $HOME/cups-backup"
+
 # setup input-method environment variables
 [group('im')]
 ibus: (_write-im "ibus")
