@@ -25,7 +25,6 @@ install:
 	@[ -d "$(SOURCE)/.git" ] || git clone "$(REPO)" "$(SOURCE)"
 	@chezmoi -S "$(SOURCE)" apply --init
 	@$(MAKE) --no-print-directory firefox
-	@source "$$HOME/.bashrc" || true
 
 reset:
 	@$(MAKE) --no-print-directory apply-theme THEME=tokyonight
