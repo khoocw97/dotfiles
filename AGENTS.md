@@ -527,7 +527,7 @@ colorize_icons = true
 
 ### 其他约束
 
-- `builtin_ids` 只保留 gtk3、gtk4、qt。
+- `builtin_ids` 只保留 gtk3、gtk4、qt、luciole。
 - `community_ids` 保持为空。
 - KDE 色彩方案使用独立 KDE 分发机制。
 - Noctalia 不得重新生成 Kitty、Niri、Yazi、Fcitx5、Starship 的配置文件。
