@@ -2,8 +2,10 @@ binds {
 
     // Personal
     Mod+Return hotkey-overlay-title="Open Terminal" { spawn "kitty"; }
-    Mod+E hotkey-overlay-title="Open Files" { spawn "nemo"; }
+    Mod+E hotkey-overlay-title="Open Files" { spawn-sh "luciole || nemo"; }
+    Mod+Y hotkey-overlay-title="Open Yazi" { spawn-sh "kitty -e yazi"; }
     Mod+B hotkey-overlay-title="Mozilla Firefox" { spawn "flatpak" "run" "org.mozilla.firefox"; }
+    Mod+D hotkey-overlay-title="Desktop Plus" { spawn "flatpak" "run" "org.desktop_plus.desktop-plus"; }
     Mod+G hotkey-overlay-title="Helium Browser" { spawn "helium"; }
     Mod+N hotkey-overlay-title="Text-Editor" { spawn "flatpak" "run" "org.gnome.TextEditor"; }
     Mod+O hotkey-overlay-title="OBS-Studio" { spawn "flatpak" "run" "com.obsproject.Studio"; }

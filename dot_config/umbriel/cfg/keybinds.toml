@@ -1,8 +1,10 @@
 [keybinds]
 # Personal
-"Mod+E" = "spawn kitty -e yazi"
+"Mod+E" = "spawn luciole || nemo"
+"Mod+Y" = "spawn kitty -e yazi"
 "Mod+Return" = "spawn kitty"
 "Mod+B" = "spawn firefox || flatpak run org.mozilla.firefox"
+"Mod+D" = "spawn flatpak run org.desktop_plus.desktop-plus"
 "Mod+G" = "spawn google-chrome-stable || flatpak run com.google.Chrome"
 "Mod+O" = "spawn obs || flatpak run com.obsproject.Studio"
 "Mod+N" = "spawn zed"
