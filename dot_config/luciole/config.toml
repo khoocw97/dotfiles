@@ -1,0 +1,10 @@
+schema_version = 1
+
+[browser]
+always_show_status_bar = true
+compact_menus = false
+corner_radius_scale = 0.0
+density = "comfortable"
+list_icon_size = 48
+single_click_location_edit = true
+thumbnail_cache_mib = 512
